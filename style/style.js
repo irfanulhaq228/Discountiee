@@ -48,6 +48,7 @@ export const colors = {
     white: "#ffffff",
     gray: "#EBEBEB",
     black: "#000000",
+    blackOpacity: "rgba(0,0,0,0.7)",
     transparent: "transparent",
     darkGray: "#535353",
     link: "#007FFF"
@@ -534,5 +535,135 @@ export const BrandsListStyle = StyleSheet.create({
         fontWeight: 500,
         color: colors.mainColor,
         fontStyle: "italic"
+    }
+})
+
+export const MenuStyle = StyleSheet.create({
+    main: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        backgroundColor: colors.blackOpacity,
+        height: "100%",
+        zIndex: 9999
+    },
+    sec: {
+        position: "absolute",
+        top: 0,
+        width: 280,
+        height: "100%",
+        backgroundColor: colors.white,
+        justifyContent: "space-between"
+    },
+    topArea: {
+        height: 70,
+        width: "100%",
+        borderBottomColor: colors.darkGray,
+        borderBottomWidth: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20
+    },
+    midArea: {
+        flex: 1,
+        width: "100%",
+        backgroundColor: colors.gray,
+    },
+    bottomArea: {
+        height: 70,
+        width: "100%",
+        borderTopColor: colors.darkGray,
+        borderTopWidth: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    bottomButton: {
+        width: "80%",
+        height: 50,
+        borderRadius: 10,
+        backgroundColor: colors.mainColor,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 8
+    },
+    bottomButtonIcon: {
+        color: colors.white,
+    },
+    bottomButtonText: {
+        color: colors.white,
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: 600
+    },
+    topCrossIcon: {
+        backgroundColor: colors.gray,
+        color: colors.black,
+        width: 35,
+        height: 35,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 30
+    }
+})
+
+export const BrandsSignupStyle = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: colors.white
+    },
+    sec: {
+        flex: 1,
+        marginHorizontal: 25,
+        paddingVertical: 30,
+        backgroundColor: colors.white,
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        justifyContent: "center"
+    },
+    logoView: {
+        alignItems: "center",
+    },
+    uploadLogoView: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        gap: 8
+    },
+    uploadLogoCircle: {
+        width: 130,
+        height: 130,
+        borderRadius: 130,
+        backgroundColor: colors.gray,
+        borderColor: colors.mainColor,
+        borderWidth: 5,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    BrandLogoText: {
+        fontSize: 15,
+        fontWeight: 600
+    },
+    inputBoxMain: {
+        gap: 3
+    },
+    textInput: {
+        borderColor: colors.lightMainColor,
+        borderWidth: 1,
+        borderRadius: 10,
+        height: 50,
+        paddingHorizontal: 15,
+        fontSize: 14,
+        color: colors.black,
+        fontWeight: 500
+    },
+    button: {
+        backgroundColor: colors.mainColor,
+        height: 55,
+        borderRadius: 10,
+        justifyContent: "center"
     }
 })

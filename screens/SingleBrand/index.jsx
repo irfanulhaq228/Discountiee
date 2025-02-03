@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, ScrollView, Text, Image, ImageBackground } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
@@ -11,7 +11,7 @@ import { capitalizeText, formatRelativeTime, SingleBrandStyle, SinglePostStyle, 
 import TopBar from '../../components/TopBar';
 import BottomBar from '../../components/BottomBar';
 
-function SingleBrandScreen({ singleBrand, setSingleBrand }) {
+function SingleBrandScreen({ mode, setMode, singleBrand, setSingleBrand, showMenu, setShowMenu }) {
 
     const navigation = useNavigation();
     const brand = AllBrands.find((brand) => brand.id === singleBrand);
@@ -23,9 +23,17 @@ function SingleBrandScreen({ singleBrand, setSingleBrand }) {
         }
     }, []);
 
+    useFocusEffect(
+        useCallback(() => {
+            if (mode === "brand") {
+                navigation.navigate('BrandsSignUp');
+            }
+        }, [navigation, mode])
+    );
+
     return (
         <View style={{ flex: 1 }}>
-            <TopBar text={"Brand Information"} />
+            <TopBar text={"Brand Information"} showMenu={showMenu} setShowMenu={setShowMenu} setMode={setMode} mode={mode} />
             <ScrollView style={SingleBrandStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>
                 <View style={SingleBrandStyle.bgDesign}></View>
                 <View style={SingleBrandStyle.sec}>
@@ -52,7 +60,7 @@ function SingleBrandScreen({ singleBrand, setSingleBrand }) {
                     </View>
                 </View>
             </ScrollView>
-            <BottomBar setSingleBrand={setSingleBrand} />
+            <BottomBar mode={mode} setSingleBrand={setSingleBrand} />
         </View>
     );
 }

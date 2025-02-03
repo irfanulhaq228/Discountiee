@@ -8,10 +8,14 @@ import ProfileScreen from './screens/Profile';
 import SplashScreen from './screens/SplashScreen';
 import CategoriesScreen from './screens/Categories';
 import SingleBrandScreen from './screens/SingleBrand';
+import BrandsSignUp from './screens/Brands/BrandsSignup';
+import BrandsSignIn from './screens/Brands/BrandsSignIn';
 
 const Stack = createStackNavigator();
 
 function App() {
+  const [mode, setMode] = useState("user");
+  const [showMenu, setShowMenu] = useState(false);
   const [singleBrand, setSingleBrand] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [isSplashVisible, setIsSplashVisible] = useState(true);
@@ -26,7 +30,11 @@ function App() {
 
   const HomeScreenWrapper = ({ navigation }) => (
     <HomeScreen
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
       navigation={navigation}
+      setShowMenu={setShowMenu}
       setSingleBrand={setSingleBrand}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
@@ -35,7 +43,11 @@ function App() {
 
   const SingleBrandScreenWrapper = ({ navigation }) => (
     <SingleBrandScreen
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
       navigation={navigation}
+      setShowMenu={setShowMenu}
       singleBrand={singleBrand}
       setSingleBrand={setSingleBrand}
     />
@@ -43,7 +55,37 @@ function App() {
 
   const CategoriesScreenWrapper = ({ navigation }) => (
     <CategoriesScreen
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
       navigation={navigation}
+      setShowMenu={setShowMenu}
+      setSingleBrand={setSingleBrand}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
+  );
+
+  const BrandSignupScreenWrapper = ({ navigation }) => (
+    <BrandsSignUp
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
+      navigation={navigation}
+      setShowMenu={setShowMenu}
+      setSingleBrand={setSingleBrand}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
+  );
+
+  const BrandSignInScreenWrapper = ({ navigation }) => (
+    <BrandsSignIn
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
+      navigation={navigation}
+      setShowMenu={setShowMenu}
       setSingleBrand={setSingleBrand}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
@@ -59,6 +101,8 @@ function App() {
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Categories" component={CategoriesScreenWrapper} />
             <Stack.Screen name="Brands" component={SingleBrandScreenWrapper} />
+            <Stack.Screen name="BrandsSignUp" component={BrandSignupScreenWrapper} />
+            <Stack.Screen name="BrandsSignIn" component={BrandSignInScreenWrapper} />
           </Stack.Navigator>
         </NavigationContainer>
       )}

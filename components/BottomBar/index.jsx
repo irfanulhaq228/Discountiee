@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-function BottomBar({ setSingleBrand }) {
+function BottomBar({ mode, setSingleBrand }) {
 
     const route = useRoute();
     const navigation = useNavigation();
@@ -37,43 +37,47 @@ function BottomBar({ setSingleBrand }) {
     };
 
     return (
-        <View style={BottomBarStyle.main}>
-            <View style={BottomBarStyle.sec}>
-                <LinearGradient
-                    colors={[colors.mainColor, colors.secColor]}
-                    start={{ x: 1, y: 0 }}
-                    end={{ x: 0, y: 0 }}
-                    style={BottomBarStyle.gradient}
-                >
-                    <TouchableOpacity onPress={openDrawer}>
-                        <MaterialCommunityIcons
-                            name="shopping-search"
-                            style={route.name === 'Brands' ? BottomBarStyle.activeIcon : BottomBarStyle.icon}
-                        />
-                    </TouchableOpacity>
+        <>
+            {mode === "user" && (
+                <View style={BottomBarStyle.main}>
+                    <View style={BottomBarStyle.sec}>
+                        <LinearGradient
+                            colors={[colors.mainColor, colors.secColor]}
+                            start={{ x: 1, y: 0 }}
+                            end={{ x: 0, y: 0 }}
+                            style={BottomBarStyle.gradient}
+                        >
+                            <TouchableOpacity onPress={openDrawer}>
+                                <MaterialCommunityIcons
+                                    name="shopping-search"
+                                    style={route.name === 'Brands' ? BottomBarStyle.activeIcon : BottomBarStyle.icon}
+                                />
+                            </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-                        <Icon
-                            name="home"
-                            style={route.name === 'Home' ? BottomBarStyle.activeIcon : BottomBarStyle.icon}
-                        />
-                    </TouchableOpacity>
+                            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                                <Icon
+                                    name="home"
+                                    style={route.name === 'Home' ? BottomBarStyle.activeIcon : BottomBarStyle.icon}
+                                />
+                            </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
-                        <MaterialIcons
-                            name="category"
-                            style={route.name === 'Categories' ? BottomBarStyle.activeIcon : BottomBarStyle.icon}
-                        />
-                    </TouchableOpacity>
-                </LinearGradient>
-            </View>
-            <BrandsDrawer
-                brandsDrawer={brandsDrawer}
-                closeDrawer={closeDrawer}
-                translateY={translateY}
-                setSingleBrand={setSingleBrand}
-            />
-        </View>
+                            <TouchableOpacity onPress={() => navigation.navigate('Categories')}>
+                                <MaterialIcons
+                                    name="category"
+                                    style={route.name === 'Categories' ? BottomBarStyle.activeIcon : BottomBarStyle.icon}
+                                />
+                            </TouchableOpacity>
+                        </LinearGradient>
+                    </View>
+                    <BrandsDrawer
+                        brandsDrawer={brandsDrawer}
+                        closeDrawer={closeDrawer}
+                        translateY={translateY}
+                        setSingleBrand={setSingleBrand}
+                    />
+                </View>
+            )}
+        </>
     );
 }
 
