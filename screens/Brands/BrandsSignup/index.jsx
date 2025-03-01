@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-import logo from "../../../assets/D_logo_3.png";
+import logo from "../../../assets/D_logo_4.png";
 import { BrandsSignupStyle, colors } from '../../../style/style';
 
 const BrandsSignUp = ({ mode, setMode }) => {
