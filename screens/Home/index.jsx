@@ -6,8 +6,6 @@ import { HomeStyle, Variables } from '../../style/style';
 import TopBar from '../../components/TopBar';
 import BottomBar from '../../components/BottomBar';
 
-// import Icon from 'react-native-vector-icons/FontAwesome';
-
 import RecentDeals from '../../components/RecentDeals';
 import CategoriesList from '../../components/CategoriesList';
 import FeaturedDiscount from '../../components/FeaturedDiscounts';

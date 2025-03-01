@@ -87,14 +87,15 @@ export const BottomBarStyle = StyleSheet.create({
         borderRadius: Variables.BottombarHeight,
         minHeight: Variables.BottombarHeight,
         borderWidth: 1,
-        borderColor: colors.white,
-        overflow: 'hidden',
+        borderColor: colors.white
     },
     gradient: {
         flex: 1,
         justifyContent: "space-evenly",
         alignItems: "center",
         flexDirection: "row",
+        backgroundColor: colors.mainColor,
+        borderRadius: 55
     },
     icon: {
         color: colors.white,
@@ -114,7 +115,24 @@ export const BottomBarStyle = StyleSheet.create({
         fontSize: 25,
         height: 40,
         width: 40
-    }
+    },
+    brandsProductAddIconBox: {
+        height: 50,
+        width: 50,
+        borderRadius: 50,
+        backgroundColor: colors.white,
+        borderWidth: 2,
+        borderColor: colors.mainColor,
+        marginTop: -50,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    brandsProductAddIcon: {
+        fontSize: 27,
+        color: colors.mainColor,
+        textAlign: "center"
+    },
 });
 
 export const TopBarStyle = StyleSheet.create({
@@ -666,4 +684,22 @@ export const BrandsSignupStyle = StyleSheet.create({
         borderRadius: 10,
         justifyContent: "center"
     }
+})
+
+export const BrandsHomeStyle = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: colors.white,
+        paddingTop: Variables.TopBarHeight,
+        width: "100%"
+    },
+    sec: {
+        minHeight: 100,
+        flex: 1,
+        margin: 8,
+        backgroundColor: colors.white,
+        display: "flex",
+        flexDirection: "column",
+        gap: 8
+    },
 })

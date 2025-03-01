@@ -6,14 +6,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/Home';
 import ProfileScreen from './screens/Profile';
 import SplashScreen from './screens/SplashScreen';
+import BrandsHome from './screens/Brands/HomePage';
 import CategoriesScreen from './screens/Categories';
 import SingleBrandScreen from './screens/SingleBrand';
 import BrandsSignUp from './screens/Brands/BrandsSignup';
 import BrandsSignIn from './screens/Brands/BrandsSignIn';
+import BrandsSettings from './screens/Brands/BrandsSetting';
+import BrandsDiscountAdd from './screens/Brands/BrandsDiscountAdd';
 
 const Stack = createStackNavigator();
 
 function App() {
+
   const [mode, setMode] = useState("user");
   const [showMenu, setShowMenu] = useState(false);
   const [singleBrand, setSingleBrand] = useState(null);
@@ -92,6 +96,45 @@ function App() {
     />
   );
 
+  const BrandHomeScreenWrapper = ({ navigation }) => (
+    <BrandsHome
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
+      navigation={navigation}
+      setShowMenu={setShowMenu}
+      setSingleBrand={setSingleBrand}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
+  );
+
+  const BrandSettingScreenWrapper = ({ navigation }) => (
+    <BrandsSettings
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
+      navigation={navigation}
+      setShowMenu={setShowMenu}
+      setSingleBrand={setSingleBrand}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
+  );
+
+  const BrandDiscountAddWrapper = ({ navigation }) => (
+    <BrandsDiscountAdd
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
+      navigation={navigation}
+      setShowMenu={setShowMenu}
+      setSingleBrand={setSingleBrand}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
+  );
+
   return (
     <>
       {isSplashVisible ? <SplashScreen /> : (
@@ -101,8 +144,13 @@ function App() {
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Categories" component={CategoriesScreenWrapper} />
             <Stack.Screen name="Brands" component={SingleBrandScreenWrapper} />
+
+            {/* Brands Pages */}
             <Stack.Screen name="BrandsSignUp" component={BrandSignupScreenWrapper} />
             <Stack.Screen name="BrandsSignIn" component={BrandSignInScreenWrapper} />
+            <Stack.Screen name="BrandsHome" component={BrandHomeScreenWrapper} />
+            <Stack.Screen name="BrandsSetting" component={BrandSettingScreenWrapper} />
+            <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
           </Stack.Navigator>
         </NavigationContainer>
       )}

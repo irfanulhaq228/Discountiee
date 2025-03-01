@@ -38,7 +38,7 @@ const BrandsSignIn = ({ mode, setMode }) => {
                             <Text style={BrandsSignupStyle.BrandLogoText}>Password</Text>
                             <TextInput placeholder='Enter Password' placeholderTextColor={colors.darkGray} style={BrandsSignupStyle.textInput} />
                         </View>
-                        <TouchableOpacity activeOpacity={0.8} style={BrandsSignupStyle.button}>
+                        <TouchableOpacity activeOpacity={0.8} style={BrandsSignupStyle.button} onPress={() => navigation.navigate("BrandsHome")}>
                             <Text style={{ color: colors.white, textAlign: "center", fontSize: 18, fontWeight: 600 }}>Submit</Text>
                         </TouchableOpacity>
                         <View style={{ marginTop: -10, flexDirection: "row" }}>
