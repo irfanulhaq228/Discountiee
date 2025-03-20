@@ -700,6 +700,12 @@ export const BrandsHomeStyle = StyleSheet.create({
         backgroundColor: colors.white,
         display: "flex",
         flexDirection: "column",
-        gap: 8
+        gap: 7
     },
+    formBox: {
+        backgroundColor: colors.white,
+        display: "flex",
+        flexDirection: "column",
+        gap: 5
+    }
 })
