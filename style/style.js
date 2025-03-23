@@ -707,5 +707,113 @@ export const BrandsHomeStyle = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         gap: 5
+    },
+    bottomButton: {
+        marginTop: 5,
+        width: "100%",
+        height: 50,
+        borderRadius: 10,
+        backgroundColor: colors.mainColor,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: 8
+    },
+})
+
+export const BrandsSettingStyle = StyleSheet.create({
+    imageEditIcon: {
+        position: "absolute",
+        color: colors.black
+    },
+    profileImage: {
+        height: 140,
+        width: 140,
+        backgroundColor: colors.white,
+        borderRadius: 140,
+        marginTop: 40,
+        borderWidth: 4,
+        borderColor: colors.mainColor,
+        position: "relative"
+    },
+    profileEdit: {
+        position: "absolute",
+        height: 40,
+        width: 40,
+        borderRadius: 40,
+        backgroundColor: colors.mainColor,
+        bottom: 0,
+        right: -2,
+        overflow: "visible",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    profileEditIcon: {
+        fontSize: 17,
+        color: colors.white
+    },
+    modalContainer: {
+        width: 300,
+        backgroundColor: colors.white,
+        padding: 20,
+        borderRadius: 10,
+        alignItems: "center"
+    },
+    modalProfileImage: {
+        height: 130,
+        width: 130,
+        borderRadius: 130,
+        backgroundColor: colors.white,
+        borderWidth: 3,
+        borderColor: colors.mainColor,
+        position: "relative"
+    },
+    modalProfileEdit: {
+        position: "absolute",
+        height: 30,
+        width: 30,
+        borderRadius: 30,
+        backgroundColor: colors.mainColor,
+        bottom: 3,
+        right: 0,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    input: {
+        width: "100%",
+        height: 40,
+        borderWidth: 1,
+        borderColor: colors.gray,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        marginVertical: 15,
+        color: colors.black
+    },
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        marginTop: 8,
+        gap: 7
+    },
+    cancelButton: {
+        backgroundColor: colors.darkGray,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        flex: 1
+    },
+    updateButton: {
+        backgroundColor: colors.mainColor,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        flex: 1
+    },
+    buttonText: {
+        color: colors.white,
+        fontSize: 14,
+        fontWeight: "bold",
+        textAlign: "center"
     }
 })

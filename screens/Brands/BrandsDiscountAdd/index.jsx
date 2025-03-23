@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { ScrollView, Text, View, Image, TouchableOpacity, Switch } from "react-native";
+import { ScrollView, Text, View, Image, TouchableOpacity, Switch, TextInput } from "react-native";
 
-import { BrandsHomeStyle, colors, HomeStyle, Variables } from "../../../style/style";
+import { BrandsHomeStyle, colors, HomeStyle, MenuStyle, Variables } from "../../../style/style";
 
 import TopBar from "../../../components/TopBar";
 import BrandsBottomBar from "../../../components/BrandsBottomBar";
+
+import Feather from "react-native-vector-icons/Feather";
 
 const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
 
@@ -30,14 +32,6 @@ const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
     const handleTimeChange = (event, time) => {
         setShowTimePicker(false);
         if (time) setSelectedTime(time.toLocaleTimeString());
-    };
-
-    const toggleSchedule = (value) => {
-        setIsScheduled(value);
-        if (!value) {
-            setSelectedDate(null);
-            setSelectedTime(null);
-        }
     };
 
     return (
@@ -103,6 +97,21 @@ const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
                                 )}
                             </View>
                         )}
+                    </View>
+                    <View style={BrandsHomeStyle.formBox}>
+                        <Text style={HomeStyle.categoriesListHeading}>Description</Text>
+                        <TextInput
+                            style={{ height: 100, borderColor: colors.darkGray, borderWidth: 1, borderRadius: 5, padding: 10, textAlignVertical: 'top' }}
+                            multiline={true}
+                            numberOfLines={10}
+                            placeholder="Enter description here..."
+                        />
+                    </View>
+                    <View style={BrandsHomeStyle.formBox}>
+                        <TouchableOpacity activeOpacity={0.8} style={BrandsHomeStyle.bottomButton}>
+                            <Feather name="upload" size={19} style={MenuStyle.bottomButtonIcon} />
+                            <Text style={MenuStyle.bottomButtonText}>Update</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
