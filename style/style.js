@@ -49,6 +49,7 @@ export const colors = {
     gray: "#EBEBEB",
     black: "#000000",
     blackOpacity: "rgba(0,0,0,0.7)",
+    lightBlack: "rgba(0,0,0,0.2)",
     transparent: "transparent",
     darkGray: "#535353",
     link: "#007FFF"
@@ -399,7 +400,7 @@ export const SingleBrandStyle = StyleSheet.create({
     locationIcon: {
         position: "absolute",
         left: -19,
-        top: -1,
+        top: 1,
         color: colors.mainColor
     },
     mapViewText: {
@@ -766,7 +767,8 @@ export const BrandsSettingStyle = StyleSheet.create({
         backgroundColor: colors.white,
         borderWidth: 3,
         borderColor: colors.mainColor,
-        position: "relative"
+        position: "relative",
+        marginBottom: 10
     },
     modalProfileEdit: {
         position: "absolute",
@@ -786,14 +788,14 @@ export const BrandsSettingStyle = StyleSheet.create({
         borderColor: colors.gray,
         borderRadius: 8,
         paddingHorizontal: 10,
-        marginVertical: 15,
+        marginVertical: 5,
         color: colors.black
     },
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         width: "100%",
-        marginTop: 8,
+        marginTop: 13,
         gap: 7
     },
     cancelButton: {
@@ -815,5 +817,28 @@ export const BrandsSettingStyle = StyleSheet.create({
         fontSize: 14,
         fontWeight: "bold",
         textAlign: "center"
+    },
+    modalLocationIcon: {
+        color: colors.mainColor,
+        position: "absolute",
+        right: 10,
+        top: 15,
+        zIndex: 999
+    },
+    settingsList: {
+        marginTop: 5,
+        width: "100%",
+        justifyContent: "center",
+        paddingHorizontal: 15,
+        gap: 1
+    },
+    singleSetting: {
+        width: "100%",
+        height: 45,
+        borderBottomColor: colors.lightBlack,
+        borderBottomWidth: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 13
     }
 })
