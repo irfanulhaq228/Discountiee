@@ -45,11 +45,13 @@ export const colors = {
     secColor: "#563392",
     lightMainColor: "rgba(172, 155, 201, 0.6)",
     lightMainColor2: "rgba(86, 51, 146, 0.8)",
+    lightMainColor3: "rgba(86, 51, 146, 0.2)",
     white: "#ffffff",
     gray: "#EBEBEB",
     black: "#000000",
     blackOpacity: "rgba(0,0,0,0.7)",
     lightBlack: "rgba(0,0,0,0.2)",
+    lightBlack2: "rgba(0,0,0,0.05)",
     transparent: "transparent",
     darkGray: "#535353",
     link: "#007FFF"
@@ -799,7 +801,7 @@ export const BrandsSettingStyle = StyleSheet.create({
         gap: 7
     },
     cancelButton: {
-        backgroundColor: colors.darkGray,
+        backgroundColor: colors.gray,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 8,
@@ -814,6 +816,12 @@ export const BrandsSettingStyle = StyleSheet.create({
     },
     buttonText: {
         color: colors.white,
+        fontSize: 14,
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    cancalButtonText: {
+        color: colors.black,
         fontSize: 14,
         fontWeight: "bold",
         textAlign: "center"
@@ -840,5 +848,58 @@ export const BrandsSettingStyle = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         gap: 13
+    }
+})
+
+export const BrandsNotificationStyle = StyleSheet.create({
+    sec: {
+        minHeight: 100,
+        flex: 1,
+        margin: 8,
+        backgroundColor: colors.white,
+        display: "flex",
+        flexDirection: "column",
+        gap: 7
+    },
+    notification: {
+        width: "100%",
+        borderRadius: 8,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 10,
+        gap: 10
+    },
+    image: {
+        height: 55,
+        width: 55,
+        borderRadius: 55,
+        backgroundColor: colors.mainColor,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    textBox: {
+        flex: 1,
+        height: "100%",
+        position: "relative"
+    },
+    notificationHeading: {
+        fontSize: 14,
+        fontWeight: "700",
+        marginTop: -3,
+        marginBottom: 2
+    },
+    notificationText: {
+        fontSize: 12,
+        fontWeight: "400",
+        fontStyle: "italic"
+    },
+    notificationTime: {
+        fontSize: 10,
+        color: colors.mainColor,
+        fontWeight: "500",
+        position: "absolute",
+        bottom: -4,
+        right: 0,
+        textAlign: "right"
     }
 })

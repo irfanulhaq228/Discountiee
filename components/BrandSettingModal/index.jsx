@@ -11,7 +11,7 @@ import brandImg from "../../assets/Brands_Logo/McDonald's.png";
 
 const BrandSettingModal = ({ isModalVisible, toggleModal, brandName, setBrandName }) => {
     return (
-        <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} style={{ justifyContent: "center", alignItems: "center" }}>
+        <Modal isVisible={isModalVisible} onBackdropPress={() => toggleModal("profile")} style={{ justifyContent: "center", alignItems: "center" }}>
             <View style={BrandsSettingStyle.modalContainer}>
                 <View style={BrandsSettingStyle.modalProfileImage}>
                     <Image source={brandImg} style={{ width: "100%", height: "100%", borderRadius: 130 }} />
@@ -36,10 +36,10 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brandName, setBrandNam
                     <FontAwesome6 name="location-dot" size={18} style={BrandsSettingStyle.modalLocationIcon} />
                 </View>
                 <View style={BrandsSettingStyle.buttonContainer}>
-                    <TouchableOpacity style={BrandsSettingStyle.cancelButton} onPress={toggleModal} activeOpacity={0.8}>
-                        <Text style={BrandsSettingStyle.buttonText}>Cancel</Text>
+                    <TouchableOpacity style={BrandsSettingStyle.cancelButton} onPress={() => toggleModal("profile")} activeOpacity={0.8}>
+                        <Text style={BrandsSettingStyle.cancalButtonText}>Cancel</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={BrandsSettingStyle.updateButton} onPress={toggleModal} activeOpacity={0.8}>
+                    <TouchableOpacity style={BrandsSettingStyle.updateButton} onPress={() => toggleModal("profile")} activeOpacity={0.8}>
                         <Text style={BrandsSettingStyle.buttonText}>Update</Text>
                     </TouchableOpacity>
                 </View>

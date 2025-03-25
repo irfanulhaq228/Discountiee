@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { ScrollView, Text, View, Image, TouchableOpacity } from "react-native";
 
 import { BrandsHomeStyle, BrandsSettingStyle, colors, SingleBrandStyle, Variables } from "../../../style/style";
@@ -6,21 +7,25 @@ import { BrandsHomeStyle, BrandsSettingStyle, colors, SingleBrandStyle, Variable
 import TopBar from "../../../components/TopBar";
 import BrandsBottomBar from "../../../components/BrandsBottomBar";
 import BrandSettingModal from "../../../components/BrandSettingModal";
+import BrandChangePasswordModal from "../../../components/BrandChangePasswordModal";
 
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import brandImg from "../../../assets/Brands_Logo/McDonald's.png";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 
 const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
 
+    const navigation = useNavigation();
     const [brandName, setBrandName] = useState("McDonald's");
     const [isModalVisible, setModalVisible] = useState(false);
+    const [isChPasswordModalVisible, setChPasswordModalVisible] = useState(false);
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+    const toggleModal = (label) => {
+        if (label === "profile") setModalVisible(!isModalVisible);
+        if (label === "password") setChPasswordModalVisible(!isChPasswordModalVisible);
     };
 
     return (
@@ -32,7 +37,7 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                     <View style={SingleBrandStyle.sec}>
                         <View style={BrandsSettingStyle.profileImage}>
                             <Image source={brandImg} style={{ width: "100%", height: "100%", borderRadius: 150 }} />
-                            <TouchableOpacity onPress={toggleModal} style={BrandsSettingStyle.profileEdit}>
+                            <TouchableOpacity onPress={() => toggleModal("profile")} style={BrandsSettingStyle.profileEdit}>
                                 <Feather name="edit" style={BrandsSettingStyle.profileEditIcon} />
                             </TouchableOpacity>
                         </View>
@@ -43,22 +48,22 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                         </View>
                         <View style={SingleBrandStyle.seperator}></View>
                         <View style={BrandsSettingStyle.settingsList}>
-                            <View style={BrandsSettingStyle.singleSetting}>
+                            <TouchableOpacity style={BrandsSettingStyle.singleSetting} onPress={() => navigation.navigate('BrandsDiscountAdd')} activeOpacity={0.8}>
                                 <AntDesign name="upload" size={20} />
                                 <Text>Add Discount</Text>
-                            </View>
-                            <View style={BrandsSettingStyle.singleSetting}>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={BrandsSettingStyle.singleSetting} activeOpacity={0.8} onPress={() => toggleModal("password")}>
                                 <SimpleLineIcons name="lock" size={20} />
                                 <Text>Change Password</Text>
-                            </View>
+                            </TouchableOpacity>
                             <View style={BrandsSettingStyle.singleSetting}>
                                 <SimpleLineIcons name="graph" size={20} />
                                 <Text>Posts Analytics</Text>
                             </View>
-                            <View style={BrandsSettingStyle.singleSetting}>
+                            <TouchableOpacity style={BrandsSettingStyle.singleSetting} onPress={() => navigation.navigate('BrandsNotifications')} activeOpacity={0.8}>
                                 <SimpleLineIcons name="bell" size={20} />
                                 <Text>My Notifications</Text>
-                            </View>
+                            </TouchableOpacity>
                             <View style={BrandsSettingStyle.singleSetting}>
                                 <Ionicons name="shield-checkmark-outline" size={20} />
                                 <Text>Privacy Policy</Text>
@@ -77,6 +82,7 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                 <BrandsBottomBar />
             </View>
             <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brandName={brandName} setBrandName={setBrandName} />
+            <BrandChangePasswordModal isModalVisible={isChPasswordModalVisible} toggleModal={toggleModal} />
         </>
     )
 }

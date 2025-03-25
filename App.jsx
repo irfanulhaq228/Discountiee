@@ -13,6 +13,7 @@ import BrandsSignUp from './screens/Brands/BrandsSignup';
 import BrandsSignIn from './screens/Brands/BrandsSignIn';
 import BrandsSettings from './screens/Brands/BrandsSetting';
 import BrandsDiscountAdd from './screens/Brands/BrandsDiscountAdd';
+import BrandsNotifications from './screens/Brands/BrandsNotifications';
 
 const Stack = createStackNavigator();
 
@@ -135,6 +136,19 @@ function App() {
     />
   );
 
+  const BrandNotificationsWrapper = ({ navigation }) => (
+    <BrandsNotifications
+      mode={mode}
+      setMode={setMode}
+      showMenu={showMenu}
+      navigation={navigation}
+      setShowMenu={setShowMenu}
+      setSingleBrand={setSingleBrand}
+      selectedCategory={selectedCategory}
+      setSelectedCategory={setSelectedCategory}
+    />
+  );
+
   return (
     <>
       {isSplashVisible ? <SplashScreen /> : (
@@ -151,6 +165,7 @@ function App() {
             <Stack.Screen name="BrandsHome" component={BrandHomeScreenWrapper} />
             <Stack.Screen name="BrandsSetting" component={BrandSettingScreenWrapper} />
             <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
+            <Stack.Screen name="BrandsNotifications" component={BrandNotificationsWrapper} />
           </Stack.Navigator>
         </NavigationContainer>
       )}
