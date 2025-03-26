@@ -903,3 +903,38 @@ export const BrandsNotificationStyle = StyleSheet.create({
         textAlign: "right"
     }
 })
+
+export const BrandsHomeListStyle = StyleSheet.create({
+    sec: {
+        minHeight: 100,
+        flex: 1,
+        margin: 8,
+        backgroundColor: colors.white,
+        display: "flex",
+        flexDirection: "column",
+        gap: 7
+    },
+    tabs: {
+        height: 40,
+        width: "100%",
+        flexDirection: "row",
+        paddingTop: 3
+    },
+    tab: {
+        flex: 1,
+        alignItems: "center",
+        borderBottomWidth: 2,
+    },
+    gridMain: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        width: "100%"
+    },
+    gridSingleBox: {
+        width: "33.33%",
+        aspectRatio: 1,
+        alignItems: "center",
+        justifyContent: "flex-end",
+        backgroundColor: colors.lightMainColor3
+    }
+})

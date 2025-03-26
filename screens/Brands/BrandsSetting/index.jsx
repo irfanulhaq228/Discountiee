@@ -72,10 +72,10 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                                 <Ionicons name="information-circle-outline" size={23} />
                                 <Text style={{ marginLeft: -4 }}>Help Center</Text>
                             </View>
-                            <View style={{ ...BrandsSettingStyle.singleSetting, borderColor: colors.transparent }}>
+                            <TouchableOpacity style={{ ...BrandsSettingStyle.singleSetting, borderColor: colors.transparent }} onPress={() => navigation.navigate('BrandsSignIn')} activeOpacity={0.8}>
                                 <SimpleLineIcons name="logout" size={20} style={{ color: "red" }} />
                                 <Text style={{ color: "red" }}>Logout</Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ScrollView>
