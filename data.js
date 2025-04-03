@@ -50,7 +50,8 @@ export const AllBrands = [
 
 export const featuredDiscounts = [
     { id: 1, brandId: 1, img: sapphireFeatured },
-    { id: 2, brandId: 2, img: khaadiFeatured }
+    // { id: 2, brandId: 2, img: khaadiFeatured }
+    { id: 2, brandId: 2, img: sapphireFeatured }
 ];
 
 export const RecentDiscounts = [

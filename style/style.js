@@ -217,7 +217,6 @@ export const HomeStyle = StyleSheet.create({
     },
     featuredDiscount: {
         backgroundColor: colors.black,
-        height: 150,
         borderRadius: 7,
         display: "flex",
         justifyContent: "center",
