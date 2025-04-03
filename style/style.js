@@ -46,6 +46,7 @@ export const colors = {
     lightMainColor: "rgba(172, 155, 201, 0.6)",
     lightMainColor2: "rgba(86, 51, 146, 0.8)",
     lightMainColor3: "rgba(86, 51, 146, 0.2)",
+    lightMainColor4: "rgba(86, 51, 146, 0.1)",
     white: "#ffffff",
     gray: "#EBEBEB",
     black: "#000000",
@@ -54,7 +55,13 @@ export const colors = {
     lightBlack2: "rgba(0,0,0,0.05)",
     transparent: "transparent",
     darkGray: "#535353",
-    link: "#007FFF"
+    link: "#007FFF",
+    runningStatusBg: "#CDFFC7",
+    expiredStatusBg: "#FFC7C7",
+    stoppedStatusBg: "#D2D2D2",
+    runningStatus: "rgb(46,139,87)",
+    expiredStatus: "rgb(220,20,60)",
+    stoppedStatus: "black",
 };
 
 export const Variables = {
@@ -936,5 +943,94 @@ export const BrandsHomeListStyle = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-end",
         backgroundColor: colors.lightMainColor3
+    }
+})
+
+export const BrandPostListViewStyle = StyleSheet.create({
+    listMain: {
+        gap: 7
+    },
+    singleList: {
+        backgroundColor: colors.lightMainColor4,
+        borderRadius: 7,
+        padding: 10,
+        width: "100%",
+        flexDirection: "row",
+        gap: 10
+    },
+    singleListPost: {
+        width: 85,
+        height: 85,
+        borderRadius: 7,
+        objectFit: "cover",
+        borderWidth: 1,
+        borderColor: colors.lightMainColor
+    },
+    runningStatus: {
+        backgroundColor: colors.runningStatusBg,
+        width: 80,
+        height: 30,
+        textAlign: "center",
+        textAlignVertical: "center",
+        borderRadius: 30,
+        fontWeight: 700,
+        paddingBottom: 1,
+        color: colors.runningStatus,
+        position: "absolute",
+        right: 0,
+        top: -3,
+        right: -3,
+        fontSize: 13
+    },
+    expiredStatus: {
+        backgroundColor: colors.expiredStatusBg,
+        width: 80,
+        height: 30,
+        textAlign: "center",
+        textAlignVertical: "center",
+        borderRadius: 30,
+        fontWeight: 700,
+        paddingBottom: 1,
+        color: colors.expiredStatus,
+        position: "absolute",
+        right: 0,
+        top: -3,
+        right: -3,
+        fontSize: 13
+    },
+    stoppedStatus: {
+        backgroundColor: colors.stoppedStatusBg,
+        width: 80,
+        height: 30,
+        textAlign: "center",
+        textAlignVertical: "center",
+        borderRadius: 30,
+        fontWeight: 700,
+        paddingBottom: 1,
+        color: colors.stoppedStatus,
+        position: "absolute",
+        right: 0,
+        top: -3,
+        right: -3,
+        fontSize: 13
+    },
+    seperator: {
+        height: 1,
+        backgroundColor: colors.lightMainColor,
+        marginVertical: 6
+    },
+    like: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 7
+    },
+    likeIcon: {
+        fontSize: 20,
+        color: colors.mainColor
+    },
+    likeText: {
+        fontWeight: "700",
+        marginTop: -1,
+        color: colors.mainColor
     }
 })

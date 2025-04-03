@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, View } from 'react-native'
 import { BrandsHomeListStyle } from '../../style/style'
 
 import img1 from "../../assets/grid1.jpg";

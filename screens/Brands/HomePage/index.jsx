@@ -9,6 +9,7 @@ import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
 import TopBar from "../../../components/TopBar";
 import BrandsBottomBar from "../../../components/BrandsBottomBar";
+import BrandPostListView from "../../../components/BrandPostListView";
 
 const BrandsHome = ({ mode, setMode, showMenu, setShowMenu }) => {
 
@@ -36,6 +37,7 @@ const BrandsHome = ({ mode, setMode, showMenu, setShowMenu }) => {
                         </TouchableOpacity>
                     </View>
                     {tab === "grid" && <BrandsGridList />}
+                    {tab === "list" && <BrandPostListView />}
                 </View>
             </ScrollView>
             <BrandsBottomBar />
