@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { API_URL } from '@env';
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useToast } from 'react-native-toast-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView, Text, View, Image, TouchableOpacity } from "react-native";
 
 import { BrandsHomeStyle, BrandsSettingStyle, colors, SingleBrandStyle, Variables } from "../../../style/style";
@@ -15,17 +18,39 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import brandImg from "../../../assets/Brands_Logo/McDonald's.png";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import { fn_getBrandsDetailApi } from "../../../api/api";
 
-const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
+const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu, setIsAuthenticated }) => {
 
+    const toast = useToast();
     const navigation = useNavigation();
-    const [brandName, setBrandName] = useState("McDonald's");
     const [isModalVisible, setModalVisible] = useState(false);
     const [isChPasswordModalVisible, setChPasswordModalVisible] = useState(false);
+
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        fn_getBrandsDetails();
+    }, []);
 
     const toggleModal = (label) => {
         if (label === "profile") setModalVisible(!isModalVisible);
         if (label === "password") setChPasswordModalVisible(!isChPasswordModalVisible);
+    };
+
+    const fn_getBrandsDetails = async () => {
+        const response = await fn_getBrandsDetailApi();
+        if (response?.status) {
+            setData(response?.data);
+        }
+    };
+
+    const fn_logout = async () => {
+        toast.hideAll();
+        toast.show(`✅ Logout Successfully`);
+        setIsAuthenticated(null);
+        await AsyncStorage.removeItem('id');
+        navigation.navigate('BrandsSignIn');
     };
 
     return (
@@ -36,15 +61,15 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                     <View style={SingleBrandStyle.bgDesign}></View>
                     <View style={SingleBrandStyle.sec}>
                         <View style={BrandsSettingStyle.profileImage}>
-                            <Image source={brandImg} style={{ width: "100%", height: "100%", borderRadius: 150 }} />
+                            <Image source={{ uri: `${API_URL}/${data?.logo}` }} style={{ width: "100%", height: "100%", borderRadius: 150 }} />
                             <TouchableOpacity onPress={() => toggleModal("profile")} style={BrandsSettingStyle.profileEdit}>
                                 <Feather name="edit" style={BrandsSettingStyle.profileEditIcon} />
                             </TouchableOpacity>
                         </View>
-                        <Text style={SingleBrandStyle.brandName}>{brandName}</Text>
+                        <Text style={SingleBrandStyle.brandName}>{data?.name}</Text>
                         <View>
-                            <FontAwesome6 name="location-dot" style={SingleBrandStyle.locationIcon} size={18} />
-                            <Text style={SingleBrandStyle.locationText}>Ali Town, Lahore, Pakistan</Text>
+                            <FontAwesome6 name="location-dot" style={SingleBrandStyle.locationIcon} size={14} />
+                            <Text style={SingleBrandStyle.locationText}>{data?.address}, {data?.city}, {data?.country}</Text>
                         </View>
                         <View style={SingleBrandStyle.seperator}></View>
                         <View style={BrandsSettingStyle.settingsList}>
@@ -56,14 +81,14 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                                 <SimpleLineIcons name="lock" size={20} />
                                 <Text>Change Password</Text>
                             </TouchableOpacity>
-                            <View style={BrandsSettingStyle.singleSetting}>
+                            {/* <View style={BrandsSettingStyle.singleSetting}>
                                 <SimpleLineIcons name="graph" size={20} />
                                 <Text>Posts Analytics</Text>
-                            </View>
-                            <TouchableOpacity style={BrandsSettingStyle.singleSetting} onPress={() => navigation.navigate('BrandsNotifications')} activeOpacity={0.8}>
+                            </View> */}
+                            {/* <TouchableOpacity style={BrandsSettingStyle.singleSetting} onPress={() => navigation.navigate('BrandsNotifications')} activeOpacity={0.8}>
                                 <SimpleLineIcons name="bell" size={20} />
                                 <Text>My Notifications</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                             <View style={BrandsSettingStyle.singleSetting}>
                                 <Ionicons name="shield-checkmark-outline" size={20} />
                                 <Text>Privacy Policy</Text>
@@ -72,7 +97,7 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                                 <Ionicons name="information-circle-outline" size={23} />
                                 <Text style={{ marginLeft: -4 }}>Help Center</Text>
                             </View>
-                            <TouchableOpacity style={{ ...BrandsSettingStyle.singleSetting, borderColor: colors.transparent }} onPress={() => navigation.navigate('BrandsSignIn')} activeOpacity={0.8}>
+                            <TouchableOpacity style={{ ...BrandsSettingStyle.singleSetting, borderColor: colors.transparent }} onPress={fn_logout} activeOpacity={0.8}>
                                 <SimpleLineIcons name="logout" size={20} style={{ color: "red" }} />
                                 <Text style={{ color: "red" }}>Logout</Text>
                             </TouchableOpacity>
@@ -81,7 +106,7 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu }) => {
                 </ScrollView>
                 <BrandsBottomBar />
             </View>
-            <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brandName={brandName} setBrandName={setBrandName} />
+            <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brand={data} API_URL={API_URL} toast={toast} fn_getBrandsDetails={fn_getBrandsDetails} />
             <BrandChangePasswordModal isModalVisible={isChPasswordModalVisible} toggleModal={toggleModal} />
         </>
     )

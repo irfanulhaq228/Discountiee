@@ -46,7 +46,7 @@ export const colors = {
     lightMainColor: "rgba(172, 155, 201, 0.6)",
     lightMainColor2: "rgba(86, 51, 146, 0.8)",
     lightMainColor3: "rgba(86, 51, 146, 0.2)",
-    lightMainColor4: "rgba(86, 51, 146, 0.1)",
+    lightMainColor4: "rgba(86, 51, 146, 0.07)",
     white: "#ffffff",
     gray: "#EBEBEB",
     black: "#000000",
@@ -55,6 +55,7 @@ export const colors = {
     lightBlack2: "rgba(0,0,0,0.05)",
     transparent: "transparent",
     darkGray: "#535353",
+    normalGray: "#999797",
     link: "#007FFF",
     runningStatusBg: "#CDFFC7",
     expiredStatusBg: "#FFC7C7",
@@ -399,7 +400,7 @@ export const SingleBrandStyle = StyleSheet.create({
         textAlign: "center"
     },
     locationText: {
-        fontSize: 15,
+        fontSize: 12,
         fontWeight: 500,
         textAlign: "center",
         maxWidth: "80%",
@@ -762,9 +763,9 @@ export const BrandsSettingStyle = StyleSheet.create({
         color: colors.white
     },
     modalContainer: {
-        width: 300,
+        width: 310,
         backgroundColor: colors.white,
-        padding: 20,
+        padding: 25,
         borderRadius: 10,
         alignItems: "center"
     },
@@ -804,7 +805,8 @@ export const BrandsSettingStyle = StyleSheet.create({
         justifyContent: "space-between",
         width: "100%",
         marginTop: 13,
-        gap: 7
+        gap: 7,
+        position: 'relative'
     },
     cancelButton: {
         backgroundColor: colors.gray,
@@ -941,7 +943,9 @@ export const BrandsHomeListStyle = StyleSheet.create({
         aspectRatio: 1,
         alignItems: "center",
         justifyContent: "flex-end",
-        backgroundColor: colors.lightMainColor3
+        backgroundColor: colors.lightMainColor4,
+        borderWidth: 1,
+        borderColor: colors.gray
     }
 })
 
@@ -958,8 +962,8 @@ export const BrandPostListViewStyle = StyleSheet.create({
         gap: 10
     },
     singleListPost: {
-        width: 85,
-        height: 85,
+        width: 80,
+        height: 80,
         borderRadius: 7,
         objectFit: "cover",
         borderWidth: 1,
@@ -967,24 +971,24 @@ export const BrandPostListViewStyle = StyleSheet.create({
     },
     runningStatus: {
         backgroundColor: colors.runningStatusBg,
-        width: 80,
-        height: 30,
+        width: 65,
+        height: 25,
         textAlign: "center",
         textAlignVertical: "center",
         borderRadius: 30,
-        fontWeight: 700,
+        fontWeight: 600,
         paddingBottom: 1,
         color: colors.runningStatus,
         position: "absolute",
         right: 0,
-        top: -3,
-        right: -3,
-        fontSize: 13
+        top: 0,
+        right: 45,
+        fontSize: 11
     },
     expiredStatus: {
         backgroundColor: colors.expiredStatusBg,
-        width: 80,
-        height: 30,
+        width: 65,
+        height: 25,
         textAlign: "center",
         textAlignVertical: "center",
         borderRadius: 30,
@@ -993,14 +997,14 @@ export const BrandPostListViewStyle = StyleSheet.create({
         color: colors.expiredStatus,
         position: "absolute",
         right: 0,
-        top: -3,
-        right: -3,
-        fontSize: 13
+        top: 0,
+        right: 45,
+        fontSize: 11
     },
     stoppedStatus: {
         backgroundColor: colors.stoppedStatusBg,
-        width: 80,
-        height: 30,
+        width: 65,
+        height: 25,
         textAlign: "center",
         textAlignVertical: "center",
         borderRadius: 30,
@@ -1009,9 +1013,9 @@ export const BrandPostListViewStyle = StyleSheet.create({
         color: colors.stoppedStatus,
         position: "absolute",
         right: 0,
-        top: -3,
-        right: -3,
-        fontSize: 13
+        top: 0,
+        right: 45,
+        fontSize: 11
     },
     seperator: {
         height: 1,

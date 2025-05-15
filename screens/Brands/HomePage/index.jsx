@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
+import { fn_getPostsByIDApi } from "../../../api/api";
 import BrandsGridList from "../../../components/BrandsGridList";
 import { BrandsHomeListStyle, BrandsHomeStyle, colors, Variables } from "../../../style/style";
 
@@ -14,6 +15,18 @@ import BrandPostListView from "../../../components/BrandPostListView";
 const BrandsHome = ({ mode, setMode, showMenu, setShowMenu }) => {
 
     const [tab, setTab] = useState("grid");
+    const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fn_getPosts();
+    }, []);
+
+    const fn_getPosts = async () => {
+        const response = await fn_getPostsByIDApi();
+        if (response?.status) {
+            setPosts(response?.data);
+        };
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -36,8 +49,8 @@ const BrandsHome = ({ mode, setMode, showMenu, setShowMenu }) => {
                             )}
                         </TouchableOpacity>
                     </View>
-                    {tab === "grid" && <BrandsGridList />}
-                    {tab === "list" && <BrandPostListView />}
+                    {tab === "grid" && <BrandsGridList data={posts} />}
+                    {tab === "list" && <BrandPostListView data={posts} fn_getPosts={fn_getPosts} />}
                 </View>
             </ScrollView>
             <BrandsBottomBar />

@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { ToastProvider } from 'react-native-toast-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import HomeScreen from './screens/Home';
 import ProfileScreen from './screens/Profile';
@@ -17,13 +19,22 @@ import BrandsNotifications from './screens/Brands/BrandsNotifications';
 
 const Stack = createStackNavigator();
 
-function App() {
-
-  const [mode, setMode] = useState("user");
+const App = () => {
+  const [mode, setMode] = useState("brand");
   const [showMenu, setShowMenu] = useState(false);
   const [singleBrand, setSingleBrand] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [isSplashVisible, setIsSplashVisible] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  useEffect(() => {
+    const fetchId = async () => {
+      const id = await AsyncStorage.getItem('id');
+      setIsAuthenticated(!!id);
+    };
+
+    fetchId();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -71,30 +82,12 @@ function App() {
     />
   );
 
-  const BrandSignupScreenWrapper = ({ navigation }) => (
-    <BrandsSignUp
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
+  const BrandSignupScreenWrapper = () => (
+    <BrandsSignUp setIsAuthenticated={setIsAuthenticated} />
   );
 
-  const BrandSignInScreenWrapper = ({ navigation }) => (
-    <BrandsSignIn
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
+  const BrandSignInScreenWrapper = () => (
+    <BrandsSignIn setIsAuthenticated={setIsAuthenticated} />
   );
 
   const BrandHomeScreenWrapper = ({ navigation }) => (
@@ -119,6 +112,7 @@ function App() {
       setShowMenu={setShowMenu}
       setSingleBrand={setSingleBrand}
       selectedCategory={selectedCategory}
+      setIsAuthenticated={setIsAuthenticated}
       setSelectedCategory={setSelectedCategory}
     />
   );
@@ -150,26 +144,33 @@ function App() {
   );
 
   return (
-    <>
-      {isSplashVisible ? <SplashScreen /> : (
+    <ToastProvider>
+      {isSplashVisible ? (
+        <SplashScreen />
+      ) : (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={HomeScreenWrapper} />
-            <Stack.Screen name="Profile" component={ProfileScreen} />
-            <Stack.Screen name="Categories" component={CategoriesScreenWrapper} />
-            <Stack.Screen name="Brands" component={SingleBrandScreenWrapper} />
-
-            {/* Brands Pages */}
-            <Stack.Screen name="BrandsSignUp" component={BrandSignupScreenWrapper} />
-            <Stack.Screen name="BrandsSignIn" component={BrandSignInScreenWrapper} />
-            <Stack.Screen name="BrandsHome" component={BrandHomeScreenWrapper} />
-            <Stack.Screen name="BrandsSetting" component={BrandSettingScreenWrapper} />
-            <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
-            <Stack.Screen name="BrandsNotifications" component={BrandNotificationsWrapper} />
+            {isAuthenticated ? (
+              <>
+                <Stack.Screen name="BrandsHome" component={BrandHomeScreenWrapper} />
+                <Stack.Screen name="BrandsSetting" component={BrandSettingScreenWrapper} />
+                <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
+                <Stack.Screen name="BrandsNotifications" component={BrandNotificationsWrapper} />
+                <Stack.Screen name="Home" component={HomeScreenWrapper} />
+                <Stack.Screen name="Profile" component={ProfileScreen} />
+                <Stack.Screen name="Categories" component={CategoriesScreenWrapper} />
+                <Stack.Screen name="Brands" component={SingleBrandScreenWrapper} />
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="BrandsSignIn" component={BrandSignInScreenWrapper} />
+                <Stack.Screen name="BrandsSignUp" component={BrandSignupScreenWrapper} />
+              </>
+            )}
           </Stack.Navigator>
         </NavigationContainer>
       )}
-    </>
+    </ToastProvider>
   );
 };
 
