@@ -1,5 +1,7 @@
-import { API_URL } from '@env';
+// import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const API_URL = "https://ott.gpay.one/api";
 
 export const fn_createBrandApi = async (formData) => {
     try {
@@ -149,7 +151,7 @@ export const fn_deletePostApi = async (id) => {
     try {
         const response = await fetch(`${API_URL}/post/delete/${id}`, { method: 'DELETE' });
         const responseData = await response.json();
-
+        console.log(responseData);
         if (response.status === 200) {
             return { status: true, message: "✅ Discount Deleted" };
         } else {

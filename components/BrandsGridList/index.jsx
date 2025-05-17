@@ -2,7 +2,8 @@ import React from 'react'
 import { Image, View } from 'react-native'
 import { BrandsHomeListStyle } from '../../style/style'
 
-import { API_URL } from '@env';
+// import { API_URL } from '@env';
+import { API_URL } from '../../api/api';
 
 const BrandsGridList = ({ data }) => {
     return (

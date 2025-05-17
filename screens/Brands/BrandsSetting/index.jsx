@@ -1,10 +1,11 @@
-import { API_URL } from '@env';
+// import { API_URL } from '@env';
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useToast } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView, Text, View, Image, TouchableOpacity } from "react-native";
 
+import { API_URL, fn_getBrandsDetailApi } from "../../../api/api";
 import { BrandsHomeStyle, BrandsSettingStyle, colors, SingleBrandStyle, Variables } from "../../../style/style";
 
 import TopBar from "../../../components/TopBar";
@@ -17,18 +18,20 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import { fn_getBrandsDetailApi } from "../../../api/api";
+import RoundLoader from "../../../components/RoundLoader";
 
 const BrandsSettings = ({ setIsAuthenticated }) => {
 
     const toast = useToast();
     const navigation = useNavigation();
+    const [loader, setLoader] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isChPasswordModalVisible, setChPasswordModalVisible] = useState(false);
 
     const [data, setData] = useState(null);
 
     useEffect(() => {
+        setLoader(true);
         fn_getBrandsDetails();
     }, []);
 
@@ -39,6 +42,7 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
 
     const fn_getBrandsDetails = async () => {
         const response = await fn_getBrandsDetailApi();
+        setLoader(false);
         if (response?.status) {
             setData(response?.data);
         }
@@ -54,6 +58,7 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
 
     return (
         <>
+            {loader && <RoundLoader />}
             <View style={{ flex: 1 }}>
                 <TopBar text={"Settings"} />
                 <ScrollView style={BrandsHomeStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>

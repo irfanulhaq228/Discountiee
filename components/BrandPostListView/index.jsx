@@ -4,20 +4,22 @@ import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { Image, Switch, Text, View, TouchableOpacity } from 'react-native';
 
-import { API_URL } from '@env';
+// import { API_URL } from '@env';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BrandPostListViewStyle, colors } from '../../style/style';
-import { fn_updatePostStatusApi, fn_deletePostApi } from '../../api/api';
+import { fn_updatePostStatusApi, fn_deletePostApi, API_URL } from '../../api/api';
 
-const BrandPostListView = ({ data, fn_getPosts }) => {
+const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
 
     const toast = useToast();
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
     const fn_updateStatus = async (status, item) => {
+        setUpdateLoader(true);
         toast.hideAll();
         const response = await fn_updatePostStatusApi(status, item._id);
+        setUpdateLoader(false);
         if (response?.status) {
             toast.show("✅ Status Updated");
             fn_getPosts();
@@ -28,8 +30,10 @@ const BrandPostListView = ({ data, fn_getPosts }) => {
 
     const fn_deletePost = async (id) => {
         setModalVisible(false);
+        setUpdateLoader(true);
         toast.hideAll();
         const response = await fn_deletePostApi(id);
+        setUpdateLoader(false);
         if (response?.status) {
             toast.show("✅ Discount Deleted");
             fn_getPosts();

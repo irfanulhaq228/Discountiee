@@ -5,7 +5,7 @@ import { View, Animated, Easing, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-import { BottomBarStyle } from "../../style/style";
+import { BottomBarStyle, colors } from "../../style/style";
 
 const BrandsBottomBar = () => {
 
@@ -43,7 +43,7 @@ const BrandsBottomBar = () => {
                         />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={BottomBarStyle.brandsProductAddIconBox} onPress={() => navigation.navigate('BrandsDiscountAdd')}>
+                    <TouchableOpacity style={{ ...BottomBarStyle.brandsProductAddIconBox, borderColor: route.name === 'BrandsDiscountAdd' ? "#563392" : "#fff" }} onPress={() => navigation.navigate('BrandsDiscountAdd')}>
                         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
                             <FontAwesome5 name="plus" style={BottomBarStyle.brandsProductAddIcon} />
                         </Animated.View>

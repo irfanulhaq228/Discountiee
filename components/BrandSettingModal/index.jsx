@@ -13,8 +13,12 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
 
     const [brandName, setBrandName] = React.useState(brand?.name || '');
     const [brandAddress, setBrandAddress] = React.useState(brand?.address || '');
+    const [brandCity, setBrandCity] = React.useState(brand?.city || '');
+    const [brandCountry, setBrandCountry] = React.useState(brand?.country || '');
     const [originalBrandName, setOriginalBrandName] = React.useState(brand?.name || '');
     const [originalBrandAddress, setOriginalBrandAddress] = React.useState(brand?.address || '');
+    const [originalBrandCity, setOriginalBrandCity] = React.useState(brand?.city || '');
+    const [originalBrandCountry, setOriginalBrandCountry] = React.useState(brand?.country || '');
     const [brandLogo, setBrandLogo] = React.useState(`${API_URL}/${brand?.logo}`);
     const [originalBrandLogo, setOriginalBrandLogo] = React.useState(`${API_URL}/${brand?.logo}`);
 
@@ -22,8 +26,12 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
         if (isModalVisible) {
             setBrandName(brand?.name || '');
             setBrandAddress(brand?.address || '');
+            setBrandCity(brand?.city || '');
+            setBrandCountry(brand?.country || '');
             setOriginalBrandName(brand?.name || '');
             setOriginalBrandAddress(brand?.address || '');
+            setOriginalBrandCity(brand?.city || '');
+            setOriginalBrandCountry(brand?.country || '');
             setBrandLogo(`${API_URL}/${brand?.logo}`);
             setOriginalBrandLogo(`${API_URL}/${brand?.logo}`);
         }
@@ -51,7 +59,7 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
 
     const fn_updateBrand = async () => {
         toast.hideAll();
-        if (brandName.trim() === "" || brandAddress.trim() === "") {
+        if (brandName.trim() === "" || brandAddress.trim() === "" || brandCity.trim() === "" || brandCountry.trim() === "") {
             toast.show(`❗ Please fill all the fields`);
             return;
         }
@@ -59,6 +67,8 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
         const formData = new FormData();
         formData.append('name', brandName);
         formData.append('address', brandAddress);
+        formData.append('city', brandCity);
+        formData.append('country', brandCountry);
 
         if (brandLogo !== originalBrandLogo) {
             const filename = brandLogo.split('/').pop();
@@ -103,12 +113,28 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
                     />
                     <FontAwesome6 name="location-dot" size={18} style={BrandsSettingStyle.modalLocationIcon} />
                 </View>
+                <TextInput
+                    style={BrandsSettingStyle.input}
+                    value={brandCity}
+                    onChangeText={setBrandCity}
+                    placeholder="Enter City"
+                    placeholderTextColor="#aaa"
+                />
+                <TextInput
+                    style={BrandsSettingStyle.input}
+                    value={brandCountry}
+                    onChangeText={setBrandCountry}
+                    placeholder="Enter Country"
+                    placeholderTextColor="#aaa"
+                />
                 <View style={BrandsSettingStyle.buttonContainer}>
                     <TouchableOpacity
                         style={BrandsSettingStyle.cancelButton}
                         onPress={() => {
                             setBrandName(originalBrandName);
                             setBrandAddress(originalBrandAddress);
+                            setBrandCity(originalBrandCity);
+                            setBrandCountry(originalBrandCountry);
                             setBrandLogo(originalBrandLogo);
                             toggleModal("profile");
                         }}

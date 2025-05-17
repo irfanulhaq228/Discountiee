@@ -14,12 +14,14 @@ import TopBar from "../../../components/TopBar";
 import BrandsBottomBar from "../../../components/BrandsBottomBar";
 
 import Feather from "react-native-vector-icons/Feather";
+import RoundLoader from "../../../components/RoundLoader";
 
 const BrandsDiscountAdd = () => {
 
     const toast = useToast();
     const navigation = useNavigation();
     const [images, setImages] = useState([]);
+    const [loader, setLoader] = useState(false);
     const [description, setDescription] = useState("");
     const [isScheduled, setIsScheduled] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -115,9 +117,10 @@ const BrandsDiscountAdd = () => {
         formData.append('uploadDate', isScheduled ? selectedDate : '');
         formData.append('uploadTime', isScheduled ? selectedTime : '');
         formData.append('immediately', !isScheduled);
-
+        setLoader(true);
         toast.hideAll();
         const response = await fn_createPostApi(formData);
+        setLoader(false);
         if (response?.status) {
             toast.show(response?.message);
             navigation.navigate("BrandsHome");
@@ -127,155 +130,158 @@ const BrandsDiscountAdd = () => {
     };
 
     return (
-        <View style={{ flex: 1 }}>
-            <TopBar text={"Add Discount"} />
-            <ScrollView style={BrandsHomeStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>
-                <View style={BrandsHomeStyle.sec}>
-                    {/* ======================== upload images ======================== */}
-                    <View style={BrandsHomeStyle.formBox}>
-                        <Text style={HomeStyle.categoriesListHeading}>
-                            Upload Discount Images <Text style={{ fontSize: 12, color: colors.darkGray }}>(max 10 images)</Text>
-                        </Text>
-                        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                            {images.map((image, index) => (
-                                <View
-                                    key={index}
-                                    style={{ position: "relative", width: "30%", aspectRatio: 1, margin: "1.66%", borderWidth: 1, borderColor: colors.gray, borderRadius: 10 }}
-                                >
-                                    <Image source={{ uri: image }} style={{ width: "100%", height: "100%", borderRadius: 5 }} />
-                                    <TouchableOpacity
-                                        onPress={() => handleRemoveImage(index)}
-                                        style={{ position: "absolute", top: -5, right: -5, backgroundColor: colors.red, borderRadius: 10, padding: 5 }}
+        <>
+            {loader && <RoundLoader />}
+            <View style={{ flex: 1 }}>
+                <TopBar text={"Add Discount"} />
+                <ScrollView style={BrandsHomeStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>
+                    <View style={BrandsHomeStyle.sec}>
+                        {/* ======================== upload images ======================== */}
+                        <View style={BrandsHomeStyle.formBox}>
+                            <Text style={HomeStyle.categoriesListHeading}>
+                                Upload Discount Images <Text style={{ fontSize: 12, color: colors.darkGray }}>(max 10 images)</Text>
+                            </Text>
+                            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                                {images.map((image, index) => (
+                                    <View
+                                        key={index}
+                                        style={{ position: "relative", width: "30%", aspectRatio: 1, margin: "1.66%", borderWidth: 1, borderColor: colors.gray, borderRadius: 10 }}
                                     >
-                                        <Ionicons name="close" size={15} color={colors.white} />
-                                    </TouchableOpacity>
-                                </View>
-                            ))}
-                            {images.length < 10 && (
-                                <TouchableOpacity
-                                    onPress={handleImageUpload}
-                                    style={{ width: "30%", height: 120, aspectRatio: 1, margin: "1.66%", borderRadius: 7, borderWidth: 1, borderColor: colors.darkGray, justifyContent: "center", alignItems: "center" }}
-                                >
-                                    <View style={{ display: "flex", alignItems: "center", gap: 2 }}>
-                                        <Ionicons name="image-outline" style={{ fontSize: 27, color: colors.darkGray }} />
-                                        <Text style={{ color: colors.darkGray, fontSize: 15, fontStyle: "italic" }}>Upload</Text>
+                                        <Image source={{ uri: image }} style={{ width: "100%", height: "100%", borderRadius: 5 }} />
+                                        <TouchableOpacity
+                                            onPress={() => handleRemoveImage(index)}
+                                            style={{ position: "absolute", top: -5, right: -5, backgroundColor: colors.red, borderRadius: 10, padding: 5 }}
+                                        >
+                                            <Ionicons name="close" size={15} color={colors.white} />
+                                        </TouchableOpacity>
                                     </View>
-                                </TouchableOpacity>
+                                ))}
+                                {images.length < 10 && (
+                                    <TouchableOpacity
+                                        onPress={handleImageUpload}
+                                        style={{ width: "30%", height: 120, aspectRatio: 1, margin: "1.66%", borderRadius: 7, borderWidth: 1, borderColor: colors.darkGray, justifyContent: "center", alignItems: "center" }}
+                                    >
+                                        <View style={{ display: "flex", alignItems: "center", gap: 2 }}>
+                                            <Ionicons name="image-outline" style={{ fontSize: 27, color: colors.darkGray }} />
+                                            <Text style={{ color: colors.darkGray, fontSize: 15, fontStyle: "italic" }}>Upload</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                            </View>
+                        </View>
+                        {/* ======================== schedulr upload time ======================== */}
+                        <View style={BrandsHomeStyle.formBox}>
+                            <View style={{ position: "relative" }}>
+                                <Text style={HomeStyle.categoriesListHeading}>Schedule Upload Time</Text>
+                                <Switch
+                                    value={isScheduled}
+                                    onValueChange={setIsScheduled}
+                                    style={{ position: "absolute", right: -5, top: 2 }}
+                                />
+                            </View>
+                            {isScheduled && (
+                                <View style={{ marginTop: 10 }}>
+                                    <TouchableOpacity onPress={() => setShowDatePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
+                                        <Text style={{ color: colors.darkGray, fontSize: 15 }}>
+                                            Upload Date:
+                                        </Text>
+                                        <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: selectedDate ? "normal" : "italic", color: selectedTime ? colors.black : colors.darkGray, fontWeight: selectedDate ? "500" : "400" }}>
+                                            {selectedDate || "Click to Select"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    {showDatePicker && (
+                                        <DateTimePicker
+                                            value={new Date()}
+                                            mode="date"
+                                            display={Platform.OS === "ios" ? "inline" : "default"}
+                                            onChange={handleDateChange}
+                                        />
+                                    )}
+                                    <TouchableOpacity onPress={() => setShowTimePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
+                                        <Text style={{ color: colors.darkGray, fontSize: 15 }}>
+                                            Upload Time:
+                                        </Text>
+                                        <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: selectedTime ? "normal" : "italic", color: selectedTime ? colors.black : colors.darkGray, fontWeight: selectedTime ? "500" : "400" }}>
+                                            {selectedTime || "Click to Select"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    {showTimePicker && (
+                                        <DateTimePicker
+                                            value={new Date()}
+                                            mode="time"
+                                            display={Platform.OS === "ios" ? "spinner" : "default"}
+                                            onChange={handleTimeChange}
+                                        />
+                                    )}
+                                </View>
                             )}
                         </View>
-                    </View>
-                    {/* ======================== schedulr upload time ======================== */}
-                    <View style={BrandsHomeStyle.formBox}>
-                        <View style={{ position: "relative" }}>
-                            <Text style={HomeStyle.categoriesListHeading}>Schedule Upload Time</Text>
-                            <Switch
-                                value={isScheduled}
-                                onValueChange={setIsScheduled}
-                                style={{ position: "absolute", right: -5, top: 2 }}
-                            />
-                        </View>
-                        {isScheduled && (
+                        {/* ======================== discount end time ======================== */}
+                        <View style={BrandsHomeStyle.formBox}>
+                            <Text style={HomeStyle.categoriesListHeading}>Discount End Time</Text>
                             <View style={{ marginTop: 10 }}>
-                                <TouchableOpacity onPress={() => setShowDatePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
+                                <TouchableOpacity onPress={() => setShowEndDatePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
                                     <Text style={{ color: colors.darkGray, fontSize: 15 }}>
-                                        Upload Date:
+                                        End Date:
                                     </Text>
-                                    <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: selectedDate ? "normal" : "italic", color: selectedTime ? colors.black : colors.darkGray, fontWeight: selectedDate ? "500" : "400" }}>
-                                        {selectedDate || "Not selected"}
+                                    <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: endDate ? "normal" : "italic", color: endDate ? colors.black : colors.darkGray, fontWeight: endDate ? "500" : "400" }}>
+                                        {endDate || "Click to Select"}
                                     </Text>
                                 </TouchableOpacity>
-                                {showDatePicker && (
+                                {showEndDatePicker && (
                                     <DateTimePicker
                                         value={new Date()}
                                         mode="date"
                                         display={Platform.OS === "ios" ? "inline" : "default"}
-                                        onChange={handleDateChange}
+                                        onChange={handleEndDateChange}
                                     />
                                 )}
-                                <TouchableOpacity onPress={() => setShowTimePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
+                                <TouchableOpacity onPress={() => setShowEndTimePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
                                     <Text style={{ color: colors.darkGray, fontSize: 15 }}>
-                                        Upload Time:
+                                        End Time:
                                     </Text>
-                                    <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: selectedTime ? "normal" : "italic", color: selectedTime ? colors.black : colors.darkGray, fontWeight: selectedTime ? "500" : "400" }}>
-                                        {selectedTime || "Not selected"}
+                                    <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: endTime ? "normal" : "italic", color: endTime ? colors.black : colors.darkGray, fontWeight: endTime ? "500" : "400" }}>
+                                        {endTime || "Click to Select"}
                                     </Text>
                                 </TouchableOpacity>
-                                {showTimePicker && (
+                                {showEndTimePicker && (
                                     <DateTimePicker
                                         value={new Date()}
                                         mode="time"
                                         display={Platform.OS === "ios" ? "spinner" : "default"}
-                                        onChange={handleTimeChange}
+                                        onChange={handleEndTimeChange}
                                     />
                                 )}
                             </View>
-                        )}
-                    </View>
-                    {/* ======================== discount end time ======================== */}
-                    <View style={BrandsHomeStyle.formBox}>
-                        <Text style={HomeStyle.categoriesListHeading}>Discount End Time</Text>
-                        <View style={{ marginTop: 10 }}>
-                            <TouchableOpacity onPress={() => setShowEndDatePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
-                                <Text style={{ color: colors.darkGray, fontSize: 15 }}>
-                                    End Date:
-                                </Text>
-                                <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: endDate ? "normal" : "italic", color: endDate ? colors.black : colors.darkGray, fontWeight: endDate ? "500" : "400" }}>
-                                    {endDate || "Not selected"}
-                                </Text>
+                        </View>
+                        {/* ======================== description ======================== */}
+                        <View style={BrandsHomeStyle.formBox}>
+                            <Text style={HomeStyle.categoriesListHeading}>Description</Text>
+                            <TextInput
+                                multiline={true}
+                                numberOfLines={10}
+                                value={description}
+                                placeholder="Enter description here..."
+                                onChangeText={(text) => setDescription(text)}
+                                style={{ height: 100, borderColor: colors.darkGray, borderWidth: 1, borderRadius: 5, padding: 10, textAlignVertical: 'top' }}
+                            />
+                        </View>
+                        {/* ======================== button ======================== */}
+                        <View style={BrandsHomeStyle.formBox}>
+                            <TouchableOpacity
+                                activeOpacity={0.8}
+                                style={BrandsHomeStyle.bottomButton}
+                                onPress={handleUpload}
+                            >
+                                <Feather name="upload" size={19} style={MenuStyle.bottomButtonIcon} />
+                                <Text style={MenuStyle.bottomButtonText}>Update</Text>
                             </TouchableOpacity>
-                            {showEndDatePicker && (
-                                <DateTimePicker
-                                    value={new Date()}
-                                    mode="date"
-                                    display={Platform.OS === "ios" ? "inline" : "default"}
-                                    onChange={handleEndDateChange}
-                                />
-                            )}
-                            <TouchableOpacity onPress={() => setShowEndTimePicker(true)} style={{ marginBottom: 10, position: "relative" }}>
-                                <Text style={{ color: colors.darkGray, fontSize: 15 }}>
-                                    End Time:
-                                </Text>
-                                <Text style={{ color: colors.darkGray, fontSize: 15, position: "absolute", left: "40%", fontStyle: endTime ? "normal" : "italic", color: endTime ? colors.black : colors.darkGray, fontWeight: endTime ? "500" : "400" }}>
-                                    {endTime || "Not selected"}
-                                </Text>
-                            </TouchableOpacity>
-                            {showEndTimePicker && (
-                                <DateTimePicker
-                                    value={new Date()}
-                                    mode="time"
-                                    display={Platform.OS === "ios" ? "spinner" : "default"}
-                                    onChange={handleEndTimeChange}
-                                />
-                            )}
                         </View>
                     </View>
-                    {/* ======================== description ======================== */}
-                    <View style={BrandsHomeStyle.formBox}>
-                        <Text style={HomeStyle.categoriesListHeading}>Description</Text>
-                        <TextInput
-                            multiline={true}
-                            numberOfLines={10}
-                            value={description}
-                            placeholder="Enter description here..."
-                            onChangeText={(text) => setDescription(text)}
-                            style={{ height: 100, borderColor: colors.darkGray, borderWidth: 1, borderRadius: 5, padding: 10, textAlignVertical: 'top' }}
-                        />
-                    </View>
-                    {/* ======================== button ======================== */}
-                    <View style={BrandsHomeStyle.formBox}>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            style={BrandsHomeStyle.bottomButton}
-                            onPress={handleUpload}
-                        >
-                            <Feather name="upload" size={19} style={MenuStyle.bottomButtonIcon} />
-                            <Text style={MenuStyle.bottomButtonText}>Update</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ScrollView>
-            <BrandsBottomBar />
-        </View>
+                </ScrollView>
+                <BrandsBottomBar />
+            </View>
+        </>
     )
 }
 

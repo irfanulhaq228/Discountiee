@@ -4,9 +4,10 @@ import { useToast } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { fn_loginBrandApi } from '../../../api/api';
+
 import logo from "../../../assets/D_logo_4.png";
 import { BrandsSignupStyle, colors } from '../../../style/style';
-import { fn_loginBrandApi } from '../../../api/api';
 
 const BrandsSignIn = ({ setIsAuthenticated }) => {
     const toast = useToast();

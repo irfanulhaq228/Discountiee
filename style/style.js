@@ -51,6 +51,7 @@ export const colors = {
     gray: "#EBEBEB",
     black: "#000000",
     blackOpacity: "rgba(0,0,0,0.7)",
+    blackOpacity2: "rgba(0,0,0,0.5)",
     lightBlack: "rgba(0,0,0,0.2)",
     lightBlack2: "rgba(0,0,0,0.05)",
     transparent: "transparent",
@@ -94,7 +95,8 @@ export const BottomBarStyle = StyleSheet.create({
         zIndex: 99,
     },
     sec: {
-        width: '85%',
+        width: '70%',
+        minWidth: 250,
         borderRadius: Variables.BottombarHeight,
         minHeight: Variables.BottombarHeight,
         borderWidth: 1,
@@ -128,9 +130,9 @@ export const BottomBarStyle = StyleSheet.create({
         width: 40
     },
     brandsProductAddIconBox: {
-        height: 50,
-        width: 50,
-        borderRadius: 50,
+        height: 55,
+        width: 55,
+        borderRadius: 55,
         backgroundColor: colors.white,
         borderWidth: 2,
         borderColor: colors.mainColor,
@@ -1035,5 +1037,25 @@ export const BrandPostListViewStyle = StyleSheet.create({
         fontWeight: "700",
         marginTop: -1,
         color: colors.mainColor
+    }
+})
+
+export const RoundLoadeerStyle = StyleSheet.create({
+    main: {
+        position: 'absolute',
+        width: "100%",
+        height: "100%",
+        backgroundColor: colors.blackOpacity2,
+        zIndex: 9999,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    sec: {
+        width: 100,
+        height: 100,
+        backgroundColor: colors.white,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center"
     }
 })
