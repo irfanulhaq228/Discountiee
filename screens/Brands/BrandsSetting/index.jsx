@@ -16,11 +16,10 @@ import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import brandImg from "../../../assets/Brands_Logo/McDonald's.png";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { fn_getBrandsDetailApi } from "../../../api/api";
 
-const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu, setIsAuthenticated }) => {
+const BrandsSettings = ({ setIsAuthenticated }) => {
 
     const toast = useToast();
     const navigation = useNavigation();
@@ -56,7 +55,7 @@ const BrandsSettings = ({ mode, setMode, showMenu, setShowMenu, setIsAuthenticat
     return (
         <>
             <View style={{ flex: 1 }}>
-                <TopBar text={"Settings"} showMenu={showMenu} setShowMenu={setShowMenu} setMode={setMode} mode={mode} />
+                <TopBar text={"Settings"} />
                 <ScrollView style={BrandsHomeStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>
                     <View style={SingleBrandStyle.bgDesign}></View>
                     <View style={SingleBrandStyle.sec}>

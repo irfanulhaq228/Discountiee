@@ -15,7 +15,7 @@ import BrandsBottomBar from "../../../components/BrandsBottomBar";
 
 import Feather from "react-native-vector-icons/Feather";
 
-const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
+const BrandsDiscountAdd = () => {
 
     const toast = useToast();
     const navigation = useNavigation();
@@ -57,7 +57,10 @@ const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
 
     const handleTimeChange = (event, time) => {
         setShowTimePicker(false);
-        if (time) setSelectedTime(time.toLocaleTimeString());
+        if (time) {
+            const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            setSelectedTime(formattedTime);
+        }
     };
 
     const handleEndDateChange = (event, date) => {
@@ -67,7 +70,10 @@ const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
 
     const handleEndTimeChange = (event, time) => {
         setShowEndTimePicker(false);
-        if (time) setEndTime(time.toLocaleTimeString());
+        if (time) {
+            const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            setEndTime(formattedTime);
+        }
     };
 
     const handleUpload = async () => {
@@ -122,7 +128,7 @@ const BrandsDiscountAdd = ({ mode, setMode, showMenu, setShowMenu }) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <TopBar text={"Add Discount"} showMenu={showMenu} setShowMenu={setShowMenu} setMode={setMode} mode={mode} />
+            <TopBar text={"Add Discount"} />
             <ScrollView style={BrandsHomeStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>
                 <View style={BrandsHomeStyle.sec}>
                     {/* ======================== upload images ======================== */}

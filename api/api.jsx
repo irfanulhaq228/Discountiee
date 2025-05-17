@@ -144,3 +144,19 @@ export const fn_updatePostStatusApi = async (status, id) => {
         return { status: false, message: 'Network or server error' };
     }
 };
+
+export const fn_deletePostApi = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/post/delete/${id}`, { method: 'DELETE' });
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, message: "✅ Discount Deleted" };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_deletePostApi function:', error);
+        return { status: false, message: '❌ Network or server error' };
+    }
+}

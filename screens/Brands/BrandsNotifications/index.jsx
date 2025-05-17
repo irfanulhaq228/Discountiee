@@ -9,10 +9,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import TopBar from "../../../components/TopBar";
 import BrandsBottomBar from "../../../components/BrandsBottomBar";
 
-const BrandsNotifications = ({ mode, setMode, showMenu, setShowMenu }) => {
+const BrandsNotifications = () => {
     return (
         <View style={{ flex: 1 }}>
-            <TopBar text={"My Notifications"} showMenu={showMenu} setShowMenu={setShowMenu} setMode={setMode} mode={mode} />
+            <TopBar text={"My Notifications"} />
             <ScrollView style={BrandsHomeStyle.main} contentContainerStyle={{ paddingBottom: Variables.ScreenBottomPadding }}>
                 <View style={BrandsNotificationStyle.sec}>
                     <Notification heading={"Post Liked"} text={"Wow, Your discount is liked by 24 peoples, Click to view details."} time={"1 mint ago"} icon={<AntDesign name="heart" size={26} style={{ color: colors.white, textAlign: "center", marginTop: 2 }} />} read={false} />

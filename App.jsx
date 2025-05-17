@@ -5,12 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ToastProvider } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import HomeScreen from './screens/Home';
-import ProfileScreen from './screens/Profile';
 import SplashScreen from './screens/SplashScreen';
 import BrandsHome from './screens/Brands/HomePage';
-import CategoriesScreen from './screens/Categories';
-import SingleBrandScreen from './screens/SingleBrand';
 import BrandsSignUp from './screens/Brands/BrandsSignup';
 import BrandsSignIn from './screens/Brands/BrandsSignIn';
 import BrandsSettings from './screens/Brands/BrandsSetting';
@@ -20,10 +16,6 @@ import BrandsNotifications from './screens/Brands/BrandsNotifications';
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [mode, setMode] = useState("brand");
-  const [showMenu, setShowMenu] = useState(false);
-  const [singleBrand, setSingleBrand] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(1);
   const [isSplashVisible, setIsSplashVisible] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
@@ -44,44 +36,6 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const HomeScreenWrapper = ({ navigation }) => (
-    <HomeScreen
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
-  );
-
-  const SingleBrandScreenWrapper = ({ navigation }) => (
-    <SingleBrandScreen
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      singleBrand={singleBrand}
-      setSingleBrand={setSingleBrand}
-    />
-  );
-
-  const CategoriesScreenWrapper = ({ navigation }) => (
-    <CategoriesScreen
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
-  );
-
   const BrandSignupScreenWrapper = () => (
     <BrandsSignUp setIsAuthenticated={setIsAuthenticated} />
   );
@@ -90,57 +44,20 @@ const App = () => {
     <BrandsSignIn setIsAuthenticated={setIsAuthenticated} />
   );
 
-  const BrandHomeScreenWrapper = ({ navigation }) => (
-    <BrandsHome
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
+  const BrandHomeScreenWrapper = () => (
+    <BrandsHome />
   );
 
-  const BrandSettingScreenWrapper = ({ navigation }) => (
-    <BrandsSettings
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setIsAuthenticated={setIsAuthenticated}
-      setSelectedCategory={setSelectedCategory}
-    />
+  const BrandSettingScreenWrapper = () => (
+    <BrandsSettings setIsAuthenticated={setIsAuthenticated} />
   );
 
-  const BrandDiscountAddWrapper = ({ navigation }) => (
-    <BrandsDiscountAdd
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
+  const BrandDiscountAddWrapper = () => (
+    <BrandsDiscountAdd />
   );
 
-  const BrandNotificationsWrapper = ({ navigation }) => (
-    <BrandsNotifications
-      mode={mode}
-      setMode={setMode}
-      showMenu={showMenu}
-      navigation={navigation}
-      setShowMenu={setShowMenu}
-      setSingleBrand={setSingleBrand}
-      selectedCategory={selectedCategory}
-      setSelectedCategory={setSelectedCategory}
-    />
+  const BrandNotificationsWrapper = () => (
+    <BrandsNotifications />
   );
 
   return (
@@ -156,10 +73,6 @@ const App = () => {
                 <Stack.Screen name="BrandsSetting" component={BrandSettingScreenWrapper} />
                 <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
                 <Stack.Screen name="BrandsNotifications" component={BrandNotificationsWrapper} />
-                <Stack.Screen name="Home" component={HomeScreenWrapper} />
-                <Stack.Screen name="Profile" component={ProfileScreen} />
-                <Stack.Screen name="Categories" component={CategoriesScreenWrapper} />
-                <Stack.Screen name="Brands" component={SingleBrandScreenWrapper} />
               </>
             ) : (
               <>

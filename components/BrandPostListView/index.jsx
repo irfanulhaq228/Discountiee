@@ -1,17 +1,19 @@
-import React from 'react'
 import moment from 'moment';
-import { Image, Switch, Text, View } from 'react-native'
+import Modal from "react-native-modal";
+import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { BrandPostListViewStyle, colors } from '../../style/style';
+import { Image, Switch, Text, View, TouchableOpacity } from 'react-native';
 
 import { API_URL } from '@env';
-
-import { fn_updatePostStatusApi } from '../../api/api';
-// import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BrandPostListViewStyle, colors } from '../../style/style';
+import { fn_updatePostStatusApi, fn_deletePostApi } from '../../api/api';
 
 const BrandPostListView = ({ data, fn_getPosts }) => {
 
     const toast = useToast();
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [selectedPost, setSelectedPost] = useState(null);
 
     const fn_updateStatus = async (status, item) => {
         toast.hideAll();
@@ -21,6 +23,18 @@ const BrandPostListView = ({ data, fn_getPosts }) => {
             fn_getPosts();
         } else {
             toast.show(`❌ ${response?.message}`);
+        }
+    };
+
+    const fn_deletePost = async (id) => {
+        setModalVisible(false);
+        toast.hideAll();
+        const response = await fn_deletePostApi(id);
+        if (response?.status) {
+            toast.show("✅ Discount Deleted");
+            fn_getPosts();
+        } else {
+            toast.show(`${response?.message}`);
         }
     };
 
@@ -40,8 +54,17 @@ const BrandPostListView = ({ data, fn_getPosts }) => {
                         </View>
                         <View style={BrandPostListViewStyle.seperator}></View>
                         <View style={BrandPostListViewStyle.like}>
-                            {/* <FontAwesome name="heart" style={BrandPostListViewStyle.likeIcon} />
-                            <Text style={BrandPostListViewStyle.likeText}>20</Text> */}
+                            {item?.status !== 'active' && (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setSelectedPost(item);
+                                        setModalVisible(true);
+                                    }}
+                                    style={{ position: "absolute", right: 120, top: 2 }}
+                                >
+                                    <Icon name="delete" size={20} color={colors.expiredStatus} />
+                                </TouchableOpacity>
+                            )}
                             {item?.status !== 'expired' ? (
                                 <Switch
                                     value={item?.status === "active"}
@@ -72,6 +95,26 @@ const BrandPostListView = ({ data, fn_getPosts }) => {
                     </View>
                 </View>
             ))}
+            <Modal isVisible={isModalVisible}>
+                <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Confirm Deletion</Text>
+                    <Text style={{ fontSize: 14, marginBottom: 20 }}>Are you sure you want to delete this discount?</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <TouchableOpacity
+                            onPress={() => setModalVisible(false)}
+                            style={{ padding: 10, backgroundColor: colors.gray, borderRadius: 5 }}
+                        >
+                            <Text style={{ color: colors.darkGray }}>Cancel</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => fn_deletePost(selectedPost?._id)}
+                            style={{ padding: 10, backgroundColor: colors.mainColor, borderRadius: 5 }}
+                        >
+                            <Text style={{ color: 'white' }}>Confirm</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </View>
     )
 }
