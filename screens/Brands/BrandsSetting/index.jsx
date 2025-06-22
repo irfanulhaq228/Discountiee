@@ -5,7 +5,7 @@ import { useToast } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { API_URL, fn_getBrandsDetailApi } from "../../../api/api";
+import { API_URL, fn_getBrandsDetailApi, fn_getCategoriesApi } from "../../../api/api";
 import { BrandsHomeStyle, BrandsSettingStyle, colors, SingleBrandStyle, Variables } from "../../../style/style";
 
 import TopBar from "../../../components/TopBar";
@@ -25,6 +25,7 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
     const toast = useToast();
     const navigation = useNavigation();
     const [loader, setLoader] = useState(false);
+    const [categories, setCategories] = useState([]);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isChPasswordModalVisible, setChPasswordModalVisible] = useState(false);
 
@@ -32,12 +33,22 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
 
     useEffect(() => {
         setLoader(true);
+        fn_getCategories();
         fn_getBrandsDetails();
     }, []);
 
     const toggleModal = (label) => {
         if (label === "profile") setModalVisible(!isModalVisible);
         if (label === "password") setChPasswordModalVisible(!isChPasswordModalVisible);
+    };
+
+    const fn_getCategories = async () => {
+        const response = await fn_getCategoriesApi();
+        if (response?.status) {
+            setCategories(response?.data);
+        } else {
+            setCategories([]);
+        }
     };
 
     const fn_getBrandsDetails = async () => {
@@ -110,7 +121,7 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
                 </ScrollView>
                 <BrandsBottomBar />
             </View>
-            <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brand={data} API_URL={API_URL} toast={toast} fn_getBrandsDetails={fn_getBrandsDetails} />
+            <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brand={data} API_URL={API_URL} toast={toast} fn_getBrandsDetails={fn_getBrandsDetails} categories={categories} setLoader={setLoader} />
             <BrandChangePasswordModal isModalVisible={isChPasswordModalVisible} toggleModal={toggleModal} />
         </>
     )

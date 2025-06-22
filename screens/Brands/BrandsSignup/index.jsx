@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import { City } from 'country-state-city';
+import React, { useEffect, useState } from 'react';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import SelectDropdown from 'react-native-select-dropdown';
 import { useToast } from 'react-native-toast-notifications';
 import { launchImageLibrary } from 'react-native-image-picker';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -7,15 +10,32 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import logo from "../../../assets/D_logo_4.png";
-import { fn_createBrandApi } from '../../../api/api';
+import { fn_createBrandApi, fn_getCategoriesApi } from '../../../api/api';
+
 import { BrandsSignupStyle, colors } from '../../../style/style';
 
 const BrandsSignUp = ({ setIsAuthenticated }) => {
+
     const toast = useToast();
     const navigation = useNavigation();
     const [errors, setErrors] = useState({});
+    const [categories, setCategories] = useState([]);
+    const cities = City.getCitiesOfCountry("PK");
     const [selectedImage, setSelectedImage] = useState(null);
-    const [formData, setFormData] = useState({ brandName: '', email: '', phone: '', address: '', city: '', country: '', password: '' });
+    const [formData, setFormData] = useState({ brandName: '', email: '', phone: '', address: '', city: '', country: 'Pakistan', password: '', confirmPassword: '', category: '' });
+
+    useEffect(() => {
+        fn_getCategories();
+    }, []);
+
+    const fn_getCategories = async () => {
+        const response = await fn_getCategoriesApi();
+        if (response?.status) {
+            setCategories(response?.data);
+        } else {
+            setCategories([]);
+        }
+    };
 
     const selectImage = () => {
         const options = {
@@ -44,6 +64,10 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
             toast.show("❗ Brand Name is required");
             return false;
         }
+        if (!formData.category) {
+            toast.show("❗ Category is required");
+            return false;
+        }
         if (!formData.email) {
             toast.show("❗ Email Address is required");
             return false;
@@ -68,6 +92,14 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
             toast.show("❗ Password is required");
             return false;
         }
+        if (!formData.confirmPassword) {
+            toast.show("❗ Confirm Password is required");
+            return false;
+        }
+        if (formData.password !== formData.confirmPassword) {
+            toast.show("❗ Password and Confirm Password do not match");
+            return false;
+        }
         if (!selectedImage) {
             toast.show("❗ Brand logo is required");
             return false;
@@ -86,6 +118,7 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
             formDataToSend.append('city', formData.city);
             formDataToSend.append('country', formData.country);
             formDataToSend.append('password', formData.password);
+            formDataToSend.append('category', formData.category);
 
             if (selectedImage) {
                 formDataToSend.append('logo', {
@@ -138,6 +171,35 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
                             {errors.brandName && <Text style={{ color: 'red' }}>{errors.brandName}</Text>}
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
+                            <Text style={BrandsSignupStyle.BrandLogoText}>Brand Category</Text>
+                            <SelectDropdown
+                                data={categories}
+                                search={true}
+                                searchPlaceHolder="Search Category"
+                                onSelect={(selectedItem) => {
+                                    handleInputChange('category', selectedItem._id)
+                                }}
+                                renderButton={(selectedItem) => {
+                                    return (
+                                        <View style={{ ...BrandsSignupStyle.textInput, justifyContent: 'center' }}>
+                                            <Text>
+                                                {(selectedItem && selectedItem.name) || '--- Select Category ---'}
+                                            </Text>
+                                        </View>
+                                    );
+                                }}
+                                renderItem={(item, index, isSelected) => {
+                                    return (
+                                        <View key={index} style={{ paddingVertical: 6, paddingHorizontal: 13, borderBottomWidth: 1, borderBottomColor: colors.lightBlack2, backgroundColor: isSelected ? colors.lightBlack2 : colors.white }}>
+                                            <Text>{item.name}</Text>
+                                        </View>
+                                    );
+                                }}
+                                showsVerticalScrollIndicator={false}
+                            />
+                            {errors.category && <Text style={{ color: 'red' }}>{errors.category}</Text>}
+                        </View>
+                        <View style={BrandsSignupStyle.inputBoxMain}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>Email Address</Text>
                             <TextInput
                                 placeholder='Enter Email Address'
@@ -172,24 +234,35 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>City</Text>
-                            <TextInput
-                                placeholder='Enter City'
-                                placeholderTextColor={colors.normalGray}
-                                style={BrandsSignupStyle.textInput}
-                                value={formData.city}
-                                onChangeText={(value) => handleInputChange('city', value)}
+                            <SelectDropdown
+                                data={cities}
+                                search={true}
+                                searchPlaceHolder="Search City"
+                                onSelect={(selectedItem) => {
+                                    handleInputChange('city', selectedItem.name)
+                                }}
+                                renderButton={(selectedItem) => {
+                                    return (
+                                        <View style={{ ...BrandsSignupStyle.textInput, justifyContent: 'center' }}>
+                                            <Text>
+                                                {(selectedItem && selectedItem.name) || '--- Select City ---'}
+                                            </Text>
+                                        </View>
+                                    );
+                                }}
+                                renderItem={(item, index, isSelected) => {
+                                    return (
+                                        <View key={index} style={{ paddingVertical: 6, paddingHorizontal: 13, borderBottomWidth: 1, borderBottomColor: colors.lightBlack2, backgroundColor: isSelected ? colors.lightBlack2 : colors.white }}>
+                                            <Text>{item.name}</Text>
+                                        </View>
+                                    );
+                                }}
+                                showsVerticalScrollIndicator={false}
                             />
-                            {errors.city && <Text style={{ color: 'red' }}>{errors.city}</Text>}
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>Country</Text>
-                            <TextInput
-                                placeholder='Enter Country'
-                                placeholderTextColor={colors.normalGray}
-                                style={BrandsSignupStyle.textInput}
-                                value={formData.country}
-                                onChangeText={(value) => handleInputChange('country', value)}
-                            />
+                            <Text style={{ ...BrandsSignupStyle.textInput, lineHeight: 47 }}>{formData.country}</Text>
                             {errors.country && <Text style={{ color: 'red' }}>{errors.country}</Text>}
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
@@ -202,6 +275,17 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
                                 onChangeText={(value) => handleInputChange('password', value)}
                             />
                             {errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
+                        </View>
+                        <View style={BrandsSignupStyle.inputBoxMain}>
+                            <Text style={BrandsSignupStyle.BrandLogoText}>Confirm Password</Text>
+                            <TextInput
+                                placeholder='Confirm Password'
+                                placeholderTextColor={colors.normalGray}
+                                style={BrandsSignupStyle.textInput}
+                                value={formData.confirmPassword}
+                                onChangeText={(value) => handleInputChange('confirmPassword', value)}
+                            />
+                            {errors.confirmPassword && <Text style={{ color: 'red' }}>{errors.confirmPassword}</Text>}
                         </View>
                         <TouchableOpacity activeOpacity={0.8} style={BrandsSignupStyle.button} onPress={handleSubmit}>
                             <Text style={{ color: colors.white, textAlign: "center", fontSize: 18, fontWeight: "600" }}>Submit</Text>

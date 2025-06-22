@@ -64,6 +64,8 @@ export const colors = {
     runningStatus: "rgb(46,139,87)",
     expiredStatus: "rgb(220,20,60)",
     stoppedStatus: "black",
+    pendingStatus: '#FFB802',
+    pendingStatusBg: '#FFF7E0'
 };
 
 export const Variables = {
@@ -411,7 +413,6 @@ export const SingleBrandStyle = StyleSheet.create({
     locationIcon: {
         position: "absolute",
         left: -19,
-        top: 1,
         color: colors.mainColor
     },
     mapViewText: {
@@ -802,6 +803,24 @@ export const BrandsSettingStyle = StyleSheet.create({
         marginVertical: 5,
         color: colors.black
     },
+    select: {
+        width: "100%",
+        color: colors.black,
+    },
+    pickerWrapper: {
+        borderWidth: 1,
+        borderColor: colors.gray,
+        borderRadius: 8,
+        marginVertical: 5,
+        height: 40,
+        justifyContent: 'center', // center the picker vertically
+    },
+
+    picker: {
+        height: 40, // Needed for Android
+        color: colors.black,
+        fontSize: 15,
+    },
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -1013,6 +1032,22 @@ export const BrandPostListViewStyle = StyleSheet.create({
         fontWeight: 700,
         paddingBottom: 1,
         color: colors.stoppedStatus,
+        position: "absolute",
+        right: 0,
+        top: 0,
+        right: 45,
+        fontSize: 11
+    },
+    pendingStatus: {
+        backgroundColor: colors.pendingStatusBg,
+        width: 65,
+        height: 25,
+        textAlign: "center",
+        textAlignVertical: "center",
+        borderRadius: 30,
+        fontWeight: 700,
+        paddingBottom: 1,
+        color: colors.pendingStatus,
         position: "absolute",
         right: 0,
         top: 0,

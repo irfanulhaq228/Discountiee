@@ -161,4 +161,20 @@ export const fn_deletePostApi = async (id) => {
         console.error('Error in fn_deletePostApi function:', error);
         return { status: false, message: '❌ Network or server error' };
     }
-}
+};
+
+export const fn_getCategoriesApi = async () => {
+    try {
+        const response = await fetch(`${API_URL}/category/get-all`, { method: 'GET' });
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, data: responseData?.data || [] };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_getCategoriesApi function:', error);
+        return { status: false, message: error?.response?.data?.message || 'Network or server error' };
+    }
+};

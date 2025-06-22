@@ -4,12 +4,13 @@ import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import { launchImageLibrary } from 'react-native-image-picker'; // Replace expo-image-picker with react-native-image-picker
+import { launchImageLibrary } from 'react-native-image-picker';
+import { Picker } from '@react-native-picker/picker'; // Import Picker for dropdown
 
-import { BrandsSettingStyle } from '../../style/style';
+import { BrandsSettingStyle, SingleBrandStyle } from '../../style/style';
 import { fn_updateBrandApi } from '../../api/api';
 
-const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast, fn_getBrandsDetails }) => {
+const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast, fn_getBrandsDetails, categories, setLoader }) => {
 
     const [brandName, setBrandName] = React.useState(brand?.name || '');
     const [brandAddress, setBrandAddress] = React.useState(brand?.address || '');
@@ -21,6 +22,7 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
     const [originalBrandCountry, setOriginalBrandCountry] = React.useState(brand?.country || '');
     const [brandLogo, setBrandLogo] = React.useState(`${API_URL}/${brand?.logo}`);
     const [originalBrandLogo, setOriginalBrandLogo] = React.useState(`${API_URL}/${brand?.logo}`);
+    const [selectedCategory, setSelectedCategory] = React.useState(brand?.category || '');
 
     React.useEffect(() => {
         if (isModalVisible) {
@@ -34,6 +36,7 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
             setOriginalBrandCountry(brand?.country || '');
             setBrandLogo(`${API_URL}/${brand?.logo}`);
             setOriginalBrandLogo(`${API_URL}/${brand?.logo}`);
+            setSelectedCategory(brand?.category || '');
         }
     }, [isModalVisible, brand]);
 
@@ -69,20 +72,23 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
         formData.append('address', brandAddress);
         formData.append('city', brandCity);
         formData.append('country', brandCountry);
+        formData.append('category', selectedCategory); // Add selected category ID to payload
 
         if (brandLogo !== originalBrandLogo) {
             const filename = brandLogo.split('/').pop();
             const type = `image/${filename.split('.').pop()}`;
             formData.append('logo', { uri: brandLogo, name: filename, type });
         }
-
+        setLoader(true);
+        toggleModal("profile");
         const response = await fn_updateBrandApi(formData);
 
         if (response.status) {
+            setLoader(false);
             toast.show(`✅ Brand updated successfully`);
             fn_getBrandsDetails();
-            toggleModal("profile");
         } else {
+            setLoader(false);
             toast.show(`❗ ${response.message || 'Failed to update brand'}`);
         }
     };
@@ -127,6 +133,17 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
                     placeholder="Enter Country"
                     placeholderTextColor="#aaa"
                 />
+                <View style={{ ...SingleBrandStyle.seperator, width: "100%", marginVertical: 0, marginTop: 5 }}></View>
+                <Picker
+                    selectedValue={selectedCategory}
+                    onValueChange={(itemValue) => setSelectedCategory(itemValue)}
+                    style={BrandsSettingStyle.select}
+                >
+                    {categories.map((category) => (
+                        <Picker.Item key={category._id} label={category.name} value={category._id} />
+                    ))}
+                </Picker>
+                <View style={{ ...SingleBrandStyle.seperator, width: "100%", marginVertical: 0, marginBottom: 5 }}></View>
                 <View style={BrandsSettingStyle.buttonContainer}>
                     <TouchableOpacity
                         style={BrandsSettingStyle.cancelButton}
@@ -136,6 +153,7 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
                             setBrandCity(originalBrandCity);
                             setBrandCountry(originalBrandCountry);
                             setBrandLogo(originalBrandLogo);
+                            setSelectedCategory(brand?.category || '');
                             toggleModal("profile");
                         }}
                         activeOpacity={0.8}

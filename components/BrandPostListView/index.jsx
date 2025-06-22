@@ -69,7 +69,7 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                                     <Icon name="delete" size={20} color={colors.expiredStatus} />
                                 </TouchableOpacity>
                             )}
-                            {item?.status !== 'expired' ? (
+                            {(item?.status !== 'expired' && item?.status !== 'pending') ? (
                                 <Switch
                                     value={item?.status === "active"}
                                     onValueChange={() => fn_updateStatus(item?.status === 'active' ? 'stopped' : 'active', item)}
@@ -77,10 +77,18 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                                     trackColor={{ false: colors.lightBlack, true: colors.lightMainColor3 }}
                                     thumbColor={item?.status === "active" ? colors.mainColor : colors.darkGray}
                                 />
-                            ) : (
+                            ) : item?.status === 'expired' ? (
                                 <Switch
                                     value={item?.status === "active"}
                                     onValueChange={() => { toast.hideAll(); toast.show(`❌ Already Expired, can't Active`) }}
+                                    style={{ position: "absolute", right: -8, top: -1 }}
+                                    trackColor={{ false: colors.lightBlack, true: colors.lightMainColor3 }}
+                                    thumbColor={item?.status === "active" ? colors.mainColor : colors.darkGray}
+                                />
+                            ) : (
+                                <Switch
+                                    value={item?.status === "active"}
+                                    onValueChange={() => { toast.hideAll(); toast.show(`❌ Can't Active until time reaches`) }}
                                     style={{ position: "absolute", right: -8, top: -1 }}
                                     trackColor={{ false: colors.lightBlack, true: colors.lightMainColor3 }}
                                     thumbColor={item?.status === "active" ? colors.mainColor : colors.darkGray}
@@ -94,6 +102,9 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                             )}
                             {item?.status === "stopped" && (
                                 <Text style={BrandPostListViewStyle.stoppedStatus}>Stopped</Text>
+                            )}
+                            {item?.status === "pending" && (
+                                <Text style={BrandPostListViewStyle.pendingStatus}>Pending</Text>
                             )}
                         </View>
                     </View>

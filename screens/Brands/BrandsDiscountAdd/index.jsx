@@ -117,6 +117,7 @@ const BrandsDiscountAdd = () => {
         formData.append('uploadDate', isScheduled ? selectedDate : '');
         formData.append('uploadTime', isScheduled ? selectedTime : '');
         formData.append('immediately', !isScheduled);
+        formData.append('status', isScheduled ? 'pending' : 'active');
         setLoader(true);
         toast.hideAll();
         const response = await fn_createPostApi(formData);
