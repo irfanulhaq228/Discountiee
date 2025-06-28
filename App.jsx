@@ -12,12 +12,17 @@ import BrandsSignIn from './screens/Brands/BrandsSignIn';
 import BrandsSettings from './screens/Brands/BrandsSetting';
 import BrandsDiscountAdd from './screens/Brands/BrandsDiscountAdd';
 import BrandsNotifications from './screens/Brands/BrandsNotifications';
+import BrandsForgetPassword from './screens/Brands/BrandsForgetPassword';
+import BrandsOTP from './screens/Brands/BrandsOTP';
+import BrandsResetPassword from './screens/Brands/BrandsResetPassword';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  const [resetEmail, setResetEmail] = useState("");
 
   useEffect(() => {
     const fetchId = async () => {
@@ -38,6 +43,18 @@ const App = () => {
 
   const BrandSignupScreenWrapper = () => (
     <BrandsSignUp setIsAuthenticated={setIsAuthenticated} />
+  );
+
+  const BrandForgetPasswordScreenWrapper = () => (
+    <BrandsForgetPassword setResetEmail={setResetEmail} />
+  );
+
+  const BrandOTPWrapper = () => (
+    <BrandsOTP resetEmail={resetEmail} />
+  );
+
+  const BrandResetPasswordWrapper = () => (
+    <BrandsResetPassword resetEmail={resetEmail} />
   );
 
   const BrandSignInScreenWrapper = () => (
@@ -78,6 +95,9 @@ const App = () => {
               <>
                 <Stack.Screen name="BrandsSignIn" component={BrandSignInScreenWrapper} />
                 <Stack.Screen name="BrandsSignUp" component={BrandSignupScreenWrapper} />
+                <Stack.Screen name="BrandsForgetPassword" component={BrandForgetPasswordScreenWrapper} />
+                <Stack.Screen name="BrandsOTP" component={BrandOTPWrapper} />
+                <Stack.Screen name="BrandsResetPassword" component={BrandResetPasswordWrapper} />
               </>
             )}
           </Stack.Navigator>

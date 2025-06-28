@@ -25,7 +25,6 @@ export const fn_createBrandApi = async (formData) => {
 
 export const fn_loginBrandApi = async (data) => {
     try {
-        console.log(data)
         const response = await fetch(`${API_URL}/brand/login`, {
             method: 'POST',
             headers: {
@@ -176,5 +175,71 @@ export const fn_getCategoriesApi = async () => {
     } catch (error) {
         console.error('Error in fn_getCategoriesApi function:', error);
         return { status: false, message: error?.response?.data?.message || 'Network or server error' };
+    }
+};
+
+export const fn_sendOTPApi = async (data) => {
+    try {
+        const response = await fetch(`${API_URL}/brand/otp`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, data: responseData?.data || [], message: `✅ OTP Sent Successfully` };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_getCategoriesApi function:', error);
+        return { status: false, message: `❌ ${error?.response?.data?.message}` || '❌ Network or server error' };
+    }
+};
+
+export const fn_verifyOTPApi = async (data) => {
+    try {
+        const response = await fetch(`${API_URL}/brand/verify-otp`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, data: responseData?.data || [], message: `✅ Email Verified` };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_getCategoriesApi function:', error);
+        return { status: false, message: `❌ ${error?.response?.data?.message}` || '❌ Network or server error' };
+    }
+};
+
+export const fn_ResetPasswordApi = async (data) => {
+    try {
+        const response = await fetch(`${API_URL}/brand/update-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, data: responseData?.data || [], message: `✅ Password Reset Successfully` };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_getCategoriesApi function:', error);
+        return { status: false, message: `❌ ${error?.response?.data?.message}` || '❌ Network or server error' };
     }
 };

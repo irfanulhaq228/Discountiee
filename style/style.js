@@ -647,7 +647,7 @@ export const BrandsSignupStyle = StyleSheet.create({
     },
     sec: {
         flex: 1,
-        marginHorizontal: 25,
+        marginHorizontal: 20,
         paddingVertical: 30,
         backgroundColor: colors.white,
         display: "flex",
@@ -685,16 +685,18 @@ export const BrandsSignupStyle = StyleSheet.create({
         borderColor: colors.lightMainColor,
         borderWidth: 1,
         borderRadius: 10,
-        height: 50,
+        height: 45,
         paddingHorizontal: 15,
         fontSize: 14,
         color: colors.black,
-        fontWeight: 500
+        fontWeight: 500,
+        zIndex: 999,
+        backgroundColor: colors.white
     },
     button: {
         backgroundColor: colors.mainColor,
-        height: 55,
-        borderRadius: 10,
+        height: 45,
+        borderRadius: 50,
         justifyContent: "center"
     }
 })

@@ -6,8 +6,9 @@ import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'reac
 
 import { fn_loginBrandApi } from '../../../api/api';
 
+import login from "../../../assets/login.png";
 import logo from "../../../assets/D_logo_4.png";
-import { BrandsSignupStyle, colors } from '../../../style/style';
+import { BrandPostListViewStyle, BrandsSignupStyle, colors } from '../../../style/style';
 
 const BrandsSignIn = ({ setIsAuthenticated }) => {
     const toast = useToast();
@@ -51,16 +52,17 @@ const BrandsSignIn = ({ setIsAuthenticated }) => {
             <ScrollView style={BrandsSignupStyle.main} contentContainerStyle={{ minHeight: "100%" }}>
                 <View style={BrandsSignupStyle.sec}>
                     <View style={BrandsSignupStyle.logoView}>
-                        <Image source={logo} height={200} resizeMode="contain" style={{ width: 200, height: 80 }} />
+                        <Image source={logo} height={200} resizeMode="contain" style={{ width: 220, height: 80 }} />
                     </View>
-                    <View style={{ width: "100%", gap: 20 }}>
-                        <View style={BrandsSignupStyle.inputBoxMain}>
+                    <View style={{ width: "100%", gap: 10, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.lightMainColor, borderRadius: 15, padding: 15, boxShadow: '-2px 2px 10px rgba(0,0,0,0.1) inset, 2px -2px 10px rgba(0,0,0,0.1) inset' }}>
+                        <Image source={login} height={50} width={50} style={{ width: 250, height: 250, objectFit: 'contain', alignSelf: 'center', marginVertical: 15 }} />
+                        <View style={{ ...BrandsSignupStyle.inputBoxMain, marginTop: -15 }}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>Email Address</Text>
                             <TextInput
                                 value={email}
-                                placeholder='Enter Email Address'
+                                placeholder='johndue@gmail.com'
                                 style={BrandsSignupStyle.textInput}
-                                placeholderTextColor={colors.darkGray}
+                                placeholderTextColor={colors.lightMainColor}
                                 onChangeText={(value) => setEmail(value)}
                             />
                         </View>
@@ -68,19 +70,23 @@ const BrandsSignIn = ({ setIsAuthenticated }) => {
                             <Text style={BrandsSignupStyle.BrandLogoText}>Password</Text>
                             <TextInput
                                 value={password}
-                                placeholder='Enter Password'
+                                placeholder='*******'
                                 style={BrandsSignupStyle.textInput}
-                                placeholderTextColor={colors.darkGray}
+                                placeholderTextColor={colors.lightMainColor}
                                 onChangeText={(value) => setPassword(value)}
                             />
                         </View>
-                        <TouchableOpacity activeOpacity={0.8} style={BrandsSignupStyle.button} onPress={handleSubmit}>
-                            <Text style={{ color: colors.white, textAlign: "center", fontSize: 18, fontWeight: 600 }}>Submit</Text>
+                        <TouchableOpacity activeOpacity={0.8} style={{ ...BrandsSignupStyle.button, marginTop: 5 }} onPress={handleSubmit}>
+                            <Text style={{ color: colors.white, textAlign: "center", fontSize: 16, fontWeight: 600 }}>Login</Text>
                         </TouchableOpacity>
-                        <View style={{ marginTop: -10, flexDirection: "row" }}>
-                            <Text style={{ fontSize: 15 }}>Don't Have An Account? </Text>
+                        <TouchableOpacity style={{ marginTop: 2 }} onPress={() => navigation.navigate('BrandsForgetPassword')}>
+                            <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: '500', textDecorationLine: 'underline', color: colors.mainColor }}>Forgot Password ?</Text>
+                        </TouchableOpacity>
+                        <View style={{ ...BrandPostListViewStyle.seperator }}></View>
+                        <View style={{ marginTop: -5, flexDirection: "row" }}>
+                            <Text style={{ fontSize: 14, color: colors.darkGray, fontWeight: '500' }}>Don't Have An Account? </Text>
                             <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate("BrandsSignUp")}>
-                                <Text style={{ fontSize: 14, textDecorationLine: "underline", fontWeight: "600", color: colors.mainColor, fontStyle: "italic" }}>
+                                <Text style={{ fontSize: 15, textDecorationLine: "underline", fontWeight: "600", color: colors.mainColor, fontStyle: "italic" }}>
                                     Signup Here
                                 </Text>
                             </TouchableOpacity>
