@@ -1096,3 +1096,70 @@ export const RoundLoadeerStyle = StyleSheet.create({
         alignItems: "center"
     }
 })
+
+export const SingleDiscountStyle = StyleSheet.create({
+    imagesWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: 8
+    },
+    smallImageArea: {
+        width: 60,
+        height: 60,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: colors.lightMainColor2,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    largeImageArea: {
+        backgroundColor: 'white',
+        flex: 1,
+        height: 'auto',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: colors.lightMainColor2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 20,
+        minHeight: 250
+    },
+    inactiveButton: {
+        borderWidth: 1,
+        borderColor: colors.mainColor,
+        borderRadius: 5,
+        backgroundColor: colors.white,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    },
+    inactiveButtonText: {
+        color: colors.mainColor,
+        fontSize: 13,
+        fontWeight: 500,
+        marginTop: -1
+    },
+    activeButton: {
+        borderWidth: 1,
+        borderColor: colors.mainColor,
+        borderRadius: 5,
+        backgroundColor: colors.mainColor,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    },
+    activeButtonText: {
+        color: colors.white,
+        fontSize: 13,
+        fontWeight: 500,
+        marginTop: -1
+    },
+    seperator: {
+        width: '100%',
+        height: 1,
+        backgroundColor: colors.lightMainColor3
+    }
+})

@@ -7,14 +7,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SplashScreen from './screens/SplashScreen';
 import BrandsHome from './screens/Brands/HomePage';
+import BrandsOTP from './screens/Brands/BrandsOTP';
 import BrandsSignUp from './screens/Brands/BrandsSignup';
 import BrandsSignIn from './screens/Brands/BrandsSignIn';
 import BrandsSettings from './screens/Brands/BrandsSetting';
 import BrandsDiscountAdd from './screens/Brands/BrandsDiscountAdd';
+import SingleDiscountDetails from './screens/Brands/SingleDiscount';
+import BrandsResetPassword from './screens/Brands/BrandsResetPassword';
 import BrandsNotifications from './screens/Brands/BrandsNotifications';
 import BrandsForgetPassword from './screens/Brands/BrandsForgetPassword';
-import BrandsOTP from './screens/Brands/BrandsOTP';
-import BrandsResetPassword from './screens/Brands/BrandsResetPassword';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,8 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   const [resetEmail, setResetEmail] = useState("");
+
+  const [editAbleDiscount, setEditAbleDiscount] = useState(null);
 
   useEffect(() => {
     const fetchId = async () => {
@@ -77,6 +80,10 @@ const App = () => {
     <BrandsNotifications />
   );
 
+  const SingleDiscountDetailsWrapper = () => (
+    <SingleDiscountDetails />
+  );
+
   return (
     <ToastProvider>
       {isSplashVisible ? (
@@ -90,6 +97,7 @@ const App = () => {
                 <Stack.Screen name="BrandsSetting" component={BrandSettingScreenWrapper} />
                 <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
                 <Stack.Screen name="BrandsNotifications" component={BrandNotificationsWrapper} />
+                <Stack.Screen name="SingleDiscountDetails" component={SingleDiscountDetailsWrapper} />
               </>
             ) : (
               <>
