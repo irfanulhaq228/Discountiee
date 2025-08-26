@@ -1,11 +1,11 @@
 import { City } from 'country-state-city';
 import React, { useEffect, useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useToast } from 'react-native-toast-notifications';
 import { launchImageLibrary } from 'react-native-image-picker';
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -22,6 +22,8 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
     const [categories, setCategories] = useState([]);
     const cities = City.getCitiesOfCountry("PK");
     const [selectedImage, setSelectedImage] = useState(null);
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
     const [formData, setFormData] = useState({ brandName: '', email: '', phone: '', address: '', city: '', country: 'Pakistan', password: '', confirmPassword: '', category: '' });
 
     useEffect(() => {
@@ -267,24 +269,68 @@ const BrandsSignUp = ({ setIsAuthenticated }) => {
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>Password</Text>
-                            <TextInput
-                                placeholder='Enter Password'
-                                placeholderTextColor={colors.normalGray}
-                                style={BrandsSignupStyle.textInput}
-                                value={formData.password}
-                                onChangeText={(value) => handleInputChange('password', value)}
-                            />
+                            <View style={{ position: 'relative' }}>
+                                <TextInput
+                                    placeholder='Enter Password'
+                                    placeholderTextColor={colors.normalGray}
+                                    style={[BrandsSignupStyle.textInput, { paddingRight: 50 }]}
+                                    value={formData.password}
+                                    onChangeText={(value) => handleInputChange('password', value)}
+                                    secureTextEntry={!passwordVisible}
+                                    textContentType={passwordVisible ? 'password' : 'none'}
+                                />
+                                <TouchableOpacity
+                                    style={{
+                                        position: 'absolute',
+                                        right: 15,
+                                        top: 0,
+                                        bottom: 0,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        zIndex: 999
+                                    }}
+                                    onPress={() => setPasswordVisible(!passwordVisible)}
+                                >
+                                    <Feather
+                                        name={passwordVisible ? 'eye' : 'eye-off'}
+                                        size={17}
+                                        color={colors.mainColor}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             {errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>Confirm Password</Text>
-                            <TextInput
-                                placeholder='Confirm Password'
-                                placeholderTextColor={colors.normalGray}
-                                style={BrandsSignupStyle.textInput}
-                                value={formData.confirmPassword}
-                                onChangeText={(value) => handleInputChange('confirmPassword', value)}
-                            />
+                            <View style={{ position: 'relative' }}>
+                                <TextInput
+                                    placeholder='Confirm Password'
+                                    placeholderTextColor={colors.normalGray}
+                                    style={[BrandsSignupStyle.textInput, { paddingRight: 50 }]}
+                                    value={formData.confirmPassword}
+                                    onChangeText={(value) => handleInputChange('confirmPassword', value)}
+                                    secureTextEntry={!confirmPasswordVisible}
+                                    textContentType={confirmPasswordVisible ? 'password' : 'none'}
+                                />
+                                <TouchableOpacity
+                                    style={{
+                                        position: 'absolute',
+                                        right: 15,
+                                        top: 0,
+                                        bottom: 0,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        zIndex: 999
+                                    }}
+                                    onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+                                >
+                                    <Feather
+                                        name={confirmPasswordVisible ? 'eye' : 'eye-off'}
+                                        size={17}
+                                        color={colors.mainColor}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                             {errors.confirmPassword && <Text style={{ color: 'red' }}>{errors.confirmPassword}</Text>}
                         </View>
                         <TouchableOpacity activeOpacity={0.8} style={BrandsSignupStyle.button} onPress={handleSubmit}>

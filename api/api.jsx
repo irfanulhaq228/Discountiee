@@ -162,6 +162,42 @@ export const fn_deletePostApi = async (id) => {
     }
 };
 
+export const fn_getSinglePostApi = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/post/get-single/${id}`, { method: 'GET' });
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, data: responseData?.data || {} };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_getSinglePostApi function:', error);
+        return { status: false, message: error?.response?.data?.message || '❌ Network or server error' };
+    }
+};
+
+export const fn_updatePostApi = async (id, formData) => {
+    try {
+        const response = await fetch(`${API_URL}/post/update/${id}`, {
+            method: 'PUT',
+            body: formData,
+        });
+
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+            return { status: true, message: "✅ Discount Updated Successfully" };
+        } else {
+            return { status: false, message: `❌ ${responseData.message}` };
+        }
+    } catch (error) {
+        console.error('Error in fn_updatePostApi function:', error);
+        return { status: false, message: 'Network or server error' };
+    }
+};
+
 export const fn_getCategoriesApi = async () => {
     try {
         const response = await fetch(`${API_URL}/category/get-all`, { method: 'GET' });

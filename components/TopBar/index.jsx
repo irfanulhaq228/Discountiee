@@ -19,6 +19,7 @@ function TopBar({ text }) {
                     {text === "Settings" && <SimpleLineIcons name="settings" style={TopBarStyle.icon} />}
                     {text === "Add Discount" && <Entypo name="upload" style={TopBarStyle.icon} />}
                     {text === "Discount Details" && <Foundation name="page-edit" style={TopBarStyle.icon} />}
+                    {text === "Edit Discount" && <Foundation name="page-edit" style={TopBarStyle.icon} />}
                     <Text style={TopBarStyle.text}>{text}</Text>
                 </LinearGradient>
             </View>

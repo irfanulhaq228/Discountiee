@@ -25,8 +25,6 @@ const App = () => {
 
   const [resetEmail, setResetEmail] = useState("");
 
-  const [editAbleDiscount, setEditAbleDiscount] = useState(null);
-
   useEffect(() => {
     const fetchId = async () => {
       const id = await AsyncStorage.getItem('id');
@@ -80,8 +78,8 @@ const App = () => {
     <BrandsNotifications />
   );
 
-  const SingleDiscountDetailsWrapper = () => (
-    <SingleDiscountDetails />
+  const SingleDiscountDetailsWrapper = ({ route }) => (
+    <SingleDiscountDetails route={route} />
   );
 
   return (

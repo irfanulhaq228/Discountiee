@@ -1,4 +1,4 @@
-// import { API_URL } from '@env';
+import { City } from 'country-state-city';
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useToast } from 'react-native-toast-notifications';
@@ -15,16 +15,17 @@ import BrandChangePasswordModal from "../../../components/BrandChangePasswordMod
 
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import RoundLoader from "../../../components/RoundLoader";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import RoundLoader from "../../../components/RoundLoader";
 
 const BrandsSettings = ({ setIsAuthenticated }) => {
 
     const toast = useToast();
     const navigation = useNavigation();
     const [loader, setLoader] = useState(false);
+    const cities = City.getCitiesOfCountry("PK");
     const [categories, setCategories] = useState([]);
     const [isModalVisible, setModalVisible] = useState(false);
     const [isChPasswordModalVisible, setChPasswordModalVisible] = useState(false);
@@ -121,7 +122,7 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
                 </ScrollView>
                 <BrandsBottomBar />
             </View>
-            <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brand={data} API_URL={API_URL} toast={toast} fn_getBrandsDetails={fn_getBrandsDetails} categories={categories} setLoader={setLoader} />
+            <BrandSettingModal isModalVisible={isModalVisible} toggleModal={toggleModal} brand={data} API_URL={API_URL} toast={toast} fn_getBrandsDetails={fn_getBrandsDetails} categories={categories} setLoader={setLoader} cities={cities} />
             <BrandChangePasswordModal isModalVisible={isChPasswordModalVisible} toggleModal={toggleModal} />
         </>
     )

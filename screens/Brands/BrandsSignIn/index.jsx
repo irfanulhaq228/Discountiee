@@ -4,6 +4,8 @@ import { useToast } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import Feather from 'react-native-vector-icons/Feather';
+
 import { fn_loginBrandApi } from '../../../api/api';
 
 import login from "../../../assets/login.png";
@@ -16,6 +18,7 @@ const BrandsSignIn = ({ setIsAuthenticated }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     const validateForm = () => {
         if (email === "") {
@@ -68,13 +71,35 @@ const BrandsSignIn = ({ setIsAuthenticated }) => {
                         </View>
                         <View style={BrandsSignupStyle.inputBoxMain}>
                             <Text style={BrandsSignupStyle.BrandLogoText}>Password</Text>
-                            <TextInput
-                                value={password}
-                                placeholder='*******'
-                                style={BrandsSignupStyle.textInput}
-                                placeholderTextColor={colors.lightMainColor}
-                                onChangeText={(value) => setPassword(value)}
-                            />
+                            <View style={{ position: 'relative' }}>
+                                <TextInput
+                                    textContentType={passwordVisible ? 'password' : 'none'}
+                                    value={password}
+                                    placeholder='*******'
+                                    style={[BrandsSignupStyle.textInput, { paddingRight: 50 }]}
+                                    placeholderTextColor={colors.lightMainColor}
+                                    onChangeText={(value) => setPassword(value)}
+                                    secureTextEntry={!passwordVisible}
+                                />
+                                <TouchableOpacity
+                                    style={{
+                                        position: 'absolute',
+                                        right: 15,
+                                        top: 0,
+                                        bottom: 0,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        zIndex: 999
+                                    }}
+                                    onPress={() => setPasswordVisible(!passwordVisible)}
+                                >
+                                    <Feather
+                                        name={passwordVisible ? 'eye' : 'eye-off'}
+                                        size={17}
+                                        color={colors.mainColor}
+                                    />
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         <TouchableOpacity activeOpacity={0.8} style={{ ...BrandsSignupStyle.button, marginTop: 5 }} onPress={handleSubmit}>
                             <Text style={{ color: colors.white, textAlign: "center", fontSize: 16, fontWeight: 600 }}>Login</Text>
@@ -98,4 +123,4 @@ const BrandsSignIn = ({ setIsAuthenticated }) => {
     )
 }
 
-export default BrandsSignIn
+export default BrandsSignIn;

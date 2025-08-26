@@ -3,6 +3,7 @@ import Modal from "react-native-modal";
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { Image, Switch, Text, View, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // import { API_URL } from '@env';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -12,6 +13,7 @@ import { fn_updatePostStatusApi, fn_deletePostApi, API_URL } from '../../api/api
 const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
 
     const toast = useToast();
+    const navigation = useNavigation();
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedPost, setSelectedPost] = useState(null);
 
@@ -45,7 +47,12 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
     return (
         <View style={BrandPostListViewStyle.listMain}>
             {data?.map((item, index) => (
-                <View key={index} style={BrandPostListViewStyle.singleList}>
+                <TouchableOpacity
+                    key={index}
+                    style={BrandPostListViewStyle.singleList}
+                    activeOpacity={0.9}
+                    onPress={() => navigation.navigate('SingleDiscountDetails', { discountId: item._id })}
+                >
                     <Image source={{ uri: `${API_URL}/${item?.images?.[0]}` }} style={BrandPostListViewStyle.singleListPost} />
                     <View style={{ gap: 3, flex: 1 }}>
                         <View style={{ flexDirection: "row", position: "relative", width: "100%" }}>
@@ -60,7 +67,8 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                         <View style={BrandPostListViewStyle.like}>
                             {item?.status !== 'active' && (
                                 <TouchableOpacity
-                                    onPress={() => {
+                                    onPress={(e) => {
+                                        e.stopPropagation();
                                         setSelectedPost(item);
                                         setModalVisible(true);
                                     }}
@@ -72,7 +80,10 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                             {(item?.status !== 'expired' && item?.status !== 'pending') ? (
                                 <Switch
                                     value={item?.status === "active"}
-                                    onValueChange={() => fn_updateStatus(item?.status === 'active' ? 'stopped' : 'active', item)}
+                                    onValueChange={(e) => {
+                                        e?.stopPropagation?.();
+                                        fn_updateStatus(item?.status === 'active' ? 'stopped' : 'active', item);
+                                    }}
                                     style={{ position: "absolute", right: -8, top: -1 }}
                                     trackColor={{ false: colors.lightBlack, true: colors.lightMainColor3 }}
                                     thumbColor={item?.status === "active" ? colors.mainColor : colors.darkGray}
@@ -80,7 +91,11 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                             ) : item?.status === 'expired' ? (
                                 <Switch
                                     value={item?.status === "active"}
-                                    onValueChange={() => { toast.hideAll(); toast.show(`❌ Already Expired, can't Active`) }}
+                                    onValueChange={(e) => {
+                                        e?.stopPropagation?.();
+                                        toast.hideAll();
+                                        toast.show(`❌ Already Expired, can't Active`)
+                                    }}
                                     style={{ position: "absolute", right: -8, top: -1 }}
                                     trackColor={{ false: colors.lightBlack, true: colors.lightMainColor3 }}
                                     thumbColor={item?.status === "active" ? colors.mainColor : colors.darkGray}
@@ -88,7 +103,11 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                             ) : (
                                 <Switch
                                     value={item?.status === "active"}
-                                    onValueChange={() => { toast.hideAll(); toast.show(`❌ Can't Active until time reaches`) }}
+                                    onValueChange={(e) => {
+                                        e?.stopPropagation?.();
+                                        toast.hideAll();
+                                        toast.show(`❌ Can't Active until time reaches`)
+                                    }}
                                     style={{ position: "absolute", right: -8, top: -1 }}
                                     trackColor={{ false: colors.lightBlack, true: colors.lightMainColor3 }}
                                     thumbColor={item?.status === "active" ? colors.mainColor : colors.darkGray}
@@ -108,7 +127,7 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                             )}
                         </View>
                     </View>
-                </View>
+                </TouchableOpacity>
             ))}
             <Modal isVisible={isModalVisible}>
                 <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>

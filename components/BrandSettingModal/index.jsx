@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from "react-native-modal";
+import SelectDropdown from 'react-native-select-dropdown';
 import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 
 import Feather from "react-native-vector-icons/Feather";
@@ -7,10 +8,10 @@ import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { Picker } from '@react-native-picker/picker'; // Import Picker for dropdown
 
-import { BrandsSettingStyle, SingleBrandStyle } from '../../style/style';
 import { fn_updateBrandApi } from '../../api/api';
+import { BrandsSettingStyle, colors, SingleBrandStyle } from '../../style/style';
 
-const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast, fn_getBrandsDetails, categories, setLoader }) => {
+const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast, fn_getBrandsDetails, categories, setLoader, cities }) => {
 
     const [brandName, setBrandName] = React.useState(brand?.name || '');
     const [brandAddress, setBrandAddress] = React.useState(brand?.address || '');
@@ -119,12 +120,38 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
                     />
                     <FontAwesome6 name="location-dot" size={18} style={BrandsSettingStyle.modalLocationIcon} />
                 </View>
-                <TextInput
+                {/* <TextInput
                     style={BrandsSettingStyle.input}
                     value={brandCity}
                     onChangeText={setBrandCity}
                     placeholder="Enter City"
                     placeholderTextColor="#aaa"
+                /> */}
+                <SelectDropdown
+                    data={cities}
+                    search={true}
+                    searchPlaceHolder="Search City"
+                    onSelect={(selectedItem) => {
+                        setBrandCity(selectedItem.name)
+                    }}
+                    defaultValue={brandCity}
+                    renderButton={(selectedItem) => {
+                        return (
+                            <View style={{ ...BrandsSettingStyle.input, justifyContent: 'center' }}>
+                                <Text>
+                                    {brandCity || '--- Select City ---'}
+                                </Text>
+                            </View>
+                        );
+                    }}
+                    renderItem={(item, index, isSelected) => {
+                        return (
+                            <View key={index} style={{ paddingVertical: 6, paddingHorizontal: 13, borderBottomWidth: 1, borderBottomColor: colors.lightBlack2, backgroundColor: isSelected ? colors.lightBlack2 : colors.white }}>
+                                <Text>{item.name}</Text>
+                            </View>
+                        );
+                    }}
+                    showsVerticalScrollIndicator={false}
                 />
                 <TextInput
                     style={BrandsSettingStyle.input}

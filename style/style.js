@@ -47,6 +47,7 @@ export const colors = {
     lightMainColor2: "rgba(86, 51, 146, 0.8)",
     lightMainColor3: "rgba(86, 51, 146, 0.2)",
     lightMainColor4: "rgba(86, 51, 146, 0.07)",
+    lightMainColor5: "rgba(86, 51, 146, 0.1)",
     white: "#ffffff",
     gray: "#EBEBEB",
     black: "#000000",
@@ -1118,12 +1119,11 @@ export const SingleDiscountStyle = StyleSheet.create({
         flex: 1,
         height: 'auto',
         borderRadius: 10,
-        borderWidth: 1,
-        borderColor: colors.lightMainColor2,
         justifyContent: 'center',
         alignItems: 'center',
         gap: 20,
-        minHeight: 250
+        minHeight: 250,
+        maxHeight: 300
     },
     inactiveButton: {
         borderWidth: 1,
