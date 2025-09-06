@@ -1,9 +1,15 @@
+import { Text } from 'react-native';
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ToastProvider } from 'react-native-toast-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+Text.defaultProps = {
+  ...Text.defaultProps,
+  style: [{ fontFamily: 'Montserrat' }]
+};
 
 import SplashScreen from './screens/SplashScreen';
 import BrandsHome from './screens/Brands/HomePage';
@@ -16,6 +22,8 @@ import SingleDiscountDetails from './screens/Brands/SingleDiscount';
 import BrandsResetPassword from './screens/Brands/BrandsResetPassword';
 import BrandsNotifications from './screens/Brands/BrandsNotifications';
 import BrandsForgetPassword from './screens/Brands/BrandsForgetPassword';
+import PrivacyPolicy from './screens/Brands/PrivacyPolicy';
+import HelpCenter from './screens/Brands/HelpCenter';
 
 const Stack = createStackNavigator();
 
@@ -96,6 +104,8 @@ const App = () => {
                 <Stack.Screen name="BrandsDiscountAdd" component={BrandDiscountAddWrapper} />
                 <Stack.Screen name="BrandsNotifications" component={BrandNotificationsWrapper} />
                 <Stack.Screen name="SingleDiscountDetails" component={SingleDiscountDetailsWrapper} />
+                <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+                <Stack.Screen name="HelpCenter" component={HelpCenter} />
               </>
             ) : (
               <>

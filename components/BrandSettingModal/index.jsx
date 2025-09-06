@@ -21,8 +21,8 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
     const [originalBrandAddress, setOriginalBrandAddress] = React.useState(brand?.address || '');
     const [originalBrandCity, setOriginalBrandCity] = React.useState(brand?.city || '');
     const [originalBrandCountry, setOriginalBrandCountry] = React.useState(brand?.country || '');
-    const [brandLogo, setBrandLogo] = React.useState(`${API_URL}/${brand?.logo}`);
-    const [originalBrandLogo, setOriginalBrandLogo] = React.useState(`${API_URL}/${brand?.logo}`);
+    const [brandLogo, setBrandLogo] = React.useState(`${brand?.logo}`);
+    const [originalBrandLogo, setOriginalBrandLogo] = React.useState(`${brand?.logo}`);
     const [selectedCategory, setSelectedCategory] = React.useState(brand?.category || '');
 
     React.useEffect(() => {
@@ -35,8 +35,8 @@ const BrandSettingModal = ({ isModalVisible, toggleModal, brand, API_URL, toast,
             setOriginalBrandAddress(brand?.address || '');
             setOriginalBrandCity(brand?.city || '');
             setOriginalBrandCountry(brand?.country || '');
-            setBrandLogo(`${API_URL}/${brand?.logo}`);
-            setOriginalBrandLogo(`${API_URL}/${brand?.logo}`);
+            setBrandLogo(`${brand?.logo}`);
+            setOriginalBrandLogo(`${brand?.logo}`);
             setSelectedCategory(brand?.category || '');
         }
     }, [isModalVisible, brand]);

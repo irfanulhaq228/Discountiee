@@ -71,9 +71,9 @@ const SingleDiscountDetails = ({ route }) => {
                     setUploadType("immediate");
                 }
 
-                // Handle images - convert server URLs to local state
+                // Handle images - use URLs as they come from API
                 if (data.images && data.images.length > 0) {
-                    setImages(data.images.map(img => `${API_URL}/${img}`));
+                    setImages(data.images);
                 }
             } else {
                 toast.show(response.message);
@@ -192,7 +192,7 @@ const SingleDiscountDetails = ({ route }) => {
 
         const existingImages = images.filter(img => img.startsWith('http'));
         if (existingImages.length > 0) {
-            formData.append('existingImages', JSON.stringify(existingImages.map(img => img.replace(`${API_URL}/`, ''))));
+            formData.append('existingImages', JSON.stringify(existingImages));
         }
 
         const brandId = await AsyncStorage.getItem('id');

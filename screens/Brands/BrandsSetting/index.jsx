@@ -77,7 +77,7 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
                     <View style={SingleBrandStyle.bgDesign}></View>
                     <View style={SingleBrandStyle.sec}>
                         <View style={BrandsSettingStyle.profileImage}>
-                            <Image source={{ uri: `${API_URL}/${data?.logo}` }} style={{ width: "100%", height: "100%", borderRadius: 150 }} />
+                            <Image source={{ uri: `${data?.logo}` }} style={{ width: "100%", height: "100%", borderRadius: 150 }} />
                             <TouchableOpacity onPress={() => toggleModal("profile")} style={BrandsSettingStyle.profileEdit}>
                                 <Feather name="edit" style={BrandsSettingStyle.profileEditIcon} />
                             </TouchableOpacity>
@@ -105,14 +105,14 @@ const BrandsSettings = ({ setIsAuthenticated }) => {
                                 <SimpleLineIcons name="bell" size={20} />
                                 <Text>My Notifications</Text>
                             </TouchableOpacity> */}
-                            <View style={BrandsSettingStyle.singleSetting}>
+                            <TouchableOpacity style={BrandsSettingStyle.singleSetting} onPress={() => navigation.navigate('PrivacyPolicy')} activeOpacity={0.8}>
                                 <Ionicons name="shield-checkmark-outline" size={20} />
                                 <Text>Privacy Policy</Text>
-                            </View>
-                            <View style={BrandsSettingStyle.singleSetting}>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={BrandsSettingStyle.singleSetting} onPress={() => navigation.navigate('HelpCenter')} activeOpacity={0.8}>
                                 <Ionicons name="information-circle-outline" size={23} />
                                 <Text style={{ marginLeft: -4 }}>Help Center</Text>
-                            </View>
+                            </TouchableOpacity>
                             <TouchableOpacity style={{ ...BrandsSettingStyle.singleSetting, borderColor: colors.transparent }} onPress={fn_logout} activeOpacity={0.8}>
                                 <SimpleLineIcons name="logout" size={20} style={{ color: "red" }} />
                                 <Text style={{ color: "red" }}>Logout</Text>

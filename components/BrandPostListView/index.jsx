@@ -53,7 +53,7 @@ const BrandPostListView = ({ data, fn_getPosts, setUpdateLoader }) => {
                     activeOpacity={0.9}
                     onPress={() => navigation.navigate('SingleDiscountDetails', { discountId: item._id })}
                 >
-                    <Image source={{ uri: `${API_URL}/${item?.images?.[0]}` }} style={BrandPostListViewStyle.singleListPost} />
+                    <Image source={{ uri: `${item?.images?.[0]}` }} style={BrandPostListViewStyle.singleListPost} />
                     <View style={{ gap: 3, flex: 1 }}>
                         <View style={{ flexDirection: "row", position: "relative", width: "100%" }}>
                             <Text style={{ width: 85, fontSize: 12 }}>Start Date</Text>
